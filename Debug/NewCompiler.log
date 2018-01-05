@@ -1,0 +1,11 @@
+﻿  Process "parser.y" bison file
+  parser.tab.cpp
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1066): warning C4065: switch 语句包含“default”但是未包含“case”标签
+  正在生成代码...
+  正在编译...
+  main.cpp
+  正在生成代码...
+  正在跳过...(未检测到相关更改)
+  scanner.flex.cpp
+  NewCompiler.vcxproj -> C:\Users\Dangerous\documents\visual studio 2017\Projects\NewCompiler\Debug\NewCompiler.exe
+  NewCompiler.vcxproj -> C:\Users\Dangerous\documents\visual studio 2017\Projects\NewCompiler\Debug\NewCompiler.pdb (Partial PDB)
