@@ -520,12 +520,10 @@ char *yytext_ptr;
 #include <stdlib.h>
 #include "myCompiler.h"
 using namespace std;
-
 void printStr(char *);
 
-
-#line 527 "scanner.flex.cpp"
-#line 528 "scanner.flex.cpp"
+#line 525 "scanner.flex.cpp"
+#line 526 "scanner.flex.cpp"
 
 #define INITIAL 0
 
@@ -739,10 +737,10 @@ YY_DECL
 		}
 
 	{
-#line 32 "scanner.l"
+#line 30 "scanner.l"
 
 
-#line 745 "scanner.flex.cpp"
+#line 743 "scanner.flex.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -811,173 +809,173 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 34 "scanner.l"
+#line 32 "scanner.l"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 36 "scanner.l"
+#line 34 "scanner.l"
 {}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 37 "scanner.l"
+#line 35 "scanner.l"
 {}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 41 "scanner.l"
+#line 39 "scanner.l"
 {return (INT);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 42 "scanner.l"
+#line 40 "scanner.l"
 {return (CHAR);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 43 "scanner.l"
+#line 41 "scanner.l"
 {return (FLOAT);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 45 "scanner.l"
-{yylval.intVal=atof(yytext);return NUMBER;}	
+#line 43 "scanner.l"
+{yylval.doubleVal=atof(yytext);return NUMBER;}	
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 46 "scanner.l"
-{yylval.charVal=yytext[0];return CHARACTER;}
+#line 44 "scanner.l"
+{yylval.charVal=yytext[1];return CHARACTER;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 47 "scanner.l"
+#line 45 "scanner.l"
 {yylval.doubleVal= atof(yytext);return FLOATNUMBER;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 48 "scanner.l"
+#line 46 "scanner.l"
 {strcpy(yylval.strVal,yytext);return (ID);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 50 "scanner.l"
+#line 48 "scanner.l"
 {return ADD;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 51 "scanner.l"
+#line 49 "scanner.l"
 {return	(SUB);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 52 "scanner.l"
+#line 50 "scanner.l"
 {return (MUL);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 53 "scanner.l"
+#line 51 "scanner.l"
 {return	(DIV);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 54 "scanner.l"
+#line 52 "scanner.l"
 {return	(ASSIGN);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 55 "scanner.l"
+#line 53 "scanner.l"
 {return	(OR);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 56 "scanner.l"
+#line 54 "scanner.l"
 {return	(AND);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 57 "scanner.l"
+#line 55 "scanner.l"
 {return	(NOT);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 58 "scanner.l"
+#line 56 "scanner.l"
 {return	('(');}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 59 "scanner.l"
+#line 57 "scanner.l"
 {return	(')');}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 60 "scanner.l"
+#line 58 "scanner.l"
 {return	('{');}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 61 "scanner.l"
+#line 59 "scanner.l"
 {return	('}');}
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 62 "scanner.l"
+#line 60 "scanner.l"
 {return NEWLINE;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 64 "scanner.l"
+#line 62 "scanner.l"
 {return	(LESS);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 65 "scanner.l"
+#line 63 "scanner.l"
 {return	(LE);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 66 "scanner.l"
+#line 64 "scanner.l"
 {return	(GREAT);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 67 "scanner.l"
+#line 65 "scanner.l"
 {return	(GE);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 68 "scanner.l"
+#line 66 "scanner.l"
 {return	(EQ);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 69 "scanner.l"
+#line 67 "scanner.l"
 {return	(NQ);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 71 "scanner.l"
+#line 69 "scanner.l"
 {return (IF);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 72 "scanner.l"
+#line 70 "scanner.l"
 {return (ELSE);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 73 "scanner.l"
+#line 71 "scanner.l"
 {return (WHILE);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 78 "scanner.l"
+#line 76 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 980 "scanner.flex.cpp"
+#line 978 "scanner.flex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1994,7 +1992,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 78 "scanner.l"
+#line 76 "scanner.l"
 
 
 int yywrap()

@@ -34,6 +34,7 @@ public:
 
 	void * address = (void*)this;
 	void * pValue = nullptr;
+	float value=0;
 
 	Content();
 	Content(char* _name, int _type, Content* _link , float _value);

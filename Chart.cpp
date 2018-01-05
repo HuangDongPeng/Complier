@@ -167,15 +167,15 @@ void ShowChart() {
 		cout << String2Char(tmp->name) << "	";
 
 		if (tmp->type == Z) {
-			cout << "Z	" << "整数" << "	";
+			cout << "Z	" << *(int*)tmp->pValue<< "	";
 		}
 		else if (tmp->type == F)
 		{
-			cout << "F	" << "浮点数" << "	";
+			cout << "F	" << *(float*)tmp->pValue << "	";
 		}
 		else if (tmp->type == C)
 		{
-			cout << "C	" << "字符串" << "	";
+			cout << "C	" <<*(char*)tmp->pValue << "	";
 		}
 		cout << tmp->address << "	";
 		if (tmp->link == nullptr)

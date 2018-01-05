@@ -10,8 +10,12 @@
 Content * tmpContent=new Content();
 
 extern void InserContent(Content * content);
+void SetValue(double ,char );
+void SetValueAfterDeclare(char* ,double ,char);
+
 extern int yyerror(char *);
 extern int yylex();
+
 using namespace std;
 %}
 
@@ -21,8 +25,6 @@ using namespace std;
 	double doubleVal;
 	char strVal[20];
 	char charVal;
-
-
 }
 
 %token <strVal>ID 
@@ -47,9 +49,12 @@ using namespace std;
 %%
 
 
-declare	:  declare type	ID 	NEWLINE			    {tmpContent->name=$3;InserContent(tmpContent);tmpContent=new Content();}
-		|  declare ID ASSIGN expression			{cout<<"赋值语句"<<endl;}
-		|  declare type ID ASSIGN var	        {cout<<"赋值初始化"<<endl;}
+declare	:  declare type	ID 	NEWLINE						{tmpContent->name=$3;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
+		|  declare ID ASSIGN expression	NEWLINE			{SetValueAfterDeclare($2,$4,' ');tmpContent=new Content();}
+		|  declare type ID ASSIGN value NEWLINE         { tmpContent->name=$3;
+														  SetValue(yylval.doubleVal,yylval.charVal);
+														  InserContent(tmpContent);
+														  tmpContent=new Content();}
 		|
 		;
 
@@ -63,17 +68,17 @@ expression  :expression ADD expression	{$$=$1+$3;cout<<"result is : "<<$$<<endl;
 			;
 
 
-type	:	CHAR    {tmpContent->type=C;}
+type	:	 CHAR    {tmpContent->type=C;}
 			|INT    {tmpContent->type=Z;}
 			|FLOAT  {tmpContent->type=F;}  
 			;
 
-var		:   CHARACTER
-		|	NUMBER
-		;
+value		:   CHARACTER
+		    |	NUMBER
+		    ;
 %%
 
-void SetValue(double dVar=0,char cVar='')
+void SetValue(double dVar=0,char cVar=' ')
 {
 
     float* pTmpValueF;
@@ -84,20 +89,25 @@ void SetValue(double dVar=0,char cVar='')
 	{
 	case Z:
 		tmpContent->pValue = malloc(sizeof(int));
-		pTmpValueI = (int*)pValue;
-		*pTmpValueI = _value;
+		pTmpValueI = (int*)tmpContent->pValue;
+		*pTmpValueI = dVar;
 		break;
 	case F:
 		tmpContent->pValue = malloc(sizeof(float));
-		pTmpValueF = (float*)pValue;
-		*pTmpValueF = _value;
+		pTmpValueF = (float*)tmpContent->pValue;
+		*pTmpValueF = dVar;
 		break;
 	case C:
 		tmpContent->pValue = malloc(sizeof(char));
-		pTmpChar = (char*)pValue;
-		*pTmpChar = _value;
+		pTmpChar = (char*)tmpContent->pValue;
+		*pTmpChar = cVar;
 		break;
 	default:
 		break;
 	}
+}
+
+void SetValueAfterDeclare(char* name,double dVar=0,char cVar=' '){
+	tmpContent=FindContent(name);
+	SetValue(dVar,cVar);
 }

@@ -5,9 +5,7 @@
 #include <stdlib.h>
 #include "myCompiler.h"
 using namespace std;
-
 void printStr(char *);
-
 
 %}
 
@@ -42,8 +40,8 @@ comment_inline		"//".*\n
 "char"		{return (CHAR);}
 "float"		{return (FLOAT);}
 
-{interger}	{yylval.intVal=atof(yytext);return NUMBER;}	
-{char}		{yylval.charVal=yytext[0];return CHARACTER;}
+{interger}	{yylval.doubleVal=atof(yytext);return NUMBER;}	
+{char}		{yylval.charVal=yytext[1];return CHARACTER;}
 {number}	{yylval.doubleVal= atof(yytext);return FLOATNUMBER;}
 {id}		{strcpy(yylval.strVal,yytext);return (ID);}
 
