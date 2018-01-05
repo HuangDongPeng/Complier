@@ -48,28 +48,29 @@ extern int yydebug;
    enum yytokentype {
      ID = 258,
      NUMBER = 259,
-     CHARACTER = 260,
-     INT = 261,
-     FLOAT = 262,
-     CHAR = 263,
-     ADD = 264,
-     SUB = 265,
-     MUL = 266,
-     DIV = 267,
-     ASSIGN = 268,
-     OR = 269,
-     AND = 270,
-     NOT = 271,
-     LESS = 272,
-     LE = 273,
-     GREAT = 274,
-     GE = 275,
-     EQ = 276,
-     NQ = 277,
-     IF = 278,
-     ELSE = 279,
-     WHILE = 280,
-     NEWLINE = 281
+     FLOATNUMBER = 260,
+     CHARACTER = 261,
+     INT = 262,
+     FLOAT = 263,
+     CHAR = 264,
+     ADD = 265,
+     SUB = 266,
+     MUL = 267,
+     DIV = 268,
+     ASSIGN = 269,
+     OR = 270,
+     AND = 271,
+     NOT = 272,
+     LESS = 273,
+     LE = 274,
+     GREAT = 275,
+     GE = 276,
+     EQ = 277,
+     NQ = 278,
+     IF = 279,
+     ELSE = 280,
+     WHILE = 281,
+     NEWLINE = 282
    };
 #endif
 
@@ -83,13 +84,13 @@ typedef union YYSTYPE
 	int intVal;
 	double doubleVal;
 	char strVal[20];
-	char singleChar;
+	char charVal;
 
 
 
 
 /* Line 2058 of yacc.c  */
-#line 93 "parser.tab.h"
+#line 94 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

@@ -17,6 +17,14 @@ enum Property
 	C
 };
 
+union DataType
+{
+	int intVal;
+	char charVal;
+	float floatVal;
+};
+
+
 class Content
 {
 public:

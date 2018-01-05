@@ -20,13 +20,14 @@ using namespace std;
 	int intVal;
 	double doubleVal;
 	char strVal[20];
-	char singleChar;
+	char charVal;
 
 
 }
 
 %token <strVal>ID 
 %token <doubleVal>NUMBER 
+%token <doubleVal>FLOATNUMBER
 %token <singleChar>CHARACTER
 %token INT FLOAT CHAR
 %token ADD SUB MUL DIV ASSIGN
@@ -59,7 +60,6 @@ expression  :expression ADD expression	{$$=$1+$3;cout<<"result is : "<<$$<<endl;
 			|expression MUL expression	{$$=$1*$3;cout<<"result is : "<<$$<<endl;}
 			|expression DIV expression	{$$=$1/$3;cout<<"result is : "<<$$<<endl;}
 			|NUMBER
-			
 			;
 
 
