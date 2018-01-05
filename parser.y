@@ -28,7 +28,7 @@ using namespace std;
 %token <strVal>ID 
 %token <doubleVal>NUMBER 
 %token <doubleVal>FLOATNUMBER
-%token <singleChar>CHARACTER
+%token <charVal>CHARACTER
 %token INT FLOAT CHAR
 %token ADD SUB MUL DIV ASSIGN
 %token OR AND NOT LESS LE GREAT GE EQ NQ 
@@ -49,7 +49,7 @@ using namespace std;
 
 declare	:  declare type	ID 	NEWLINE			    {tmpContent->name=$3;InserContent(tmpContent);tmpContent=new Content();}
 		|  declare ID ASSIGN expression			{cout<<"赋值语句"<<endl;}
-		|  declare type ID ASSIGN expression	{cout<<"赋值初始化"<<endl;}
+		|  declare type ID ASSIGN var	        {cout<<"赋值初始化"<<endl;}
 		|
 		;
 
@@ -68,5 +68,36 @@ type	:	CHAR    {tmpContent->type=C;}
 			|FLOAT  {tmpContent->type=F;}  
 			;
 
+var		:   CHARACTER
+		|	NUMBER
+		;
 %%
 
+void SetValue(double dVar=0,char cVar='')
+{
+
+    float* pTmpValueF;
+	int* pTmpValueI;
+	char *pTmpChar;
+
+	switch (tmpContent->type)
+	{
+	case Z:
+		tmpContent->pValue = malloc(sizeof(int));
+		pTmpValueI = (int*)pValue;
+		*pTmpValueI = _value;
+		break;
+	case F:
+		tmpContent->pValue = malloc(sizeof(float));
+		pTmpValueF = (float*)pValue;
+		*pTmpValueF = _value;
+		break;
+	case C:
+		tmpContent->pValue = malloc(sizeof(char));
+		pTmpChar = (char*)pValue;
+		*pTmpChar = _value;
+		break;
+	default:
+		break;
+	}
+}
