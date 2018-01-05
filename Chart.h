@@ -17,7 +17,6 @@ enum Property
 	C
 };
 
-
 class Content
 {
 public:
@@ -37,12 +36,11 @@ private:
 
 };
 
-
-
 inline Content::Content(char * _name, int _type, Content * _link, float _value)
 {
 	float* pTmpValueF;
 	int* pTmpValueI;
+	char *pTmpChar;
 
 	name = _name;
 	switch (_type)
@@ -59,14 +57,17 @@ inline Content::Content(char * _name, int _type, Content * _link, float _value)
 		pTmpValueF = (float*)pValue;
 		*pTmpValueF = _value;
 		break;
-
+	case 3:
+		type = C;
+		pValue = malloc(sizeof(char));
+		pTmpChar = (char*)pValue;
+		*pTmpChar = _value;
+		break;
 	default:
 		break;
 	}
 	link = _link;
 }
-
-
 
 
 void InserContent(Content * content);

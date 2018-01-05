@@ -25,6 +25,7 @@ exp			{[Ee][]-+?[0-9]+}
 interger	{digit}+
 float		({digit}*\.{digit}*+|{digit}+\.){exp}?
 char		"'"."'"
+number     {digit}+(\.{digit}+)?
 
 comment_interline	(\/\*([^*]|\*+[^/*])*\*+\/)
 comment_inline		"//".*\n
@@ -37,12 +38,13 @@ comment_inline		"//".*\n
 
 
 
-"int"		{printStr("return int");return (INT);}
+"int"		{return (INT);}
 "char"		{return (CHAR);}
 "float"		{return (FLOAT);}
 
-
-{id}	{printStr("return ID");return (ID);}
+{char}		{yylval.singleChar=yytext[0];return CHARACTER;}
+{number}	{yylval.doubleVal= atof(yytext);return NUMBER;}
+{id}		{strcpy(yylval.strVal,yytext);return (ID);}
 
 "+"		{return ADD;}
 "-"		{return	(SUB);}

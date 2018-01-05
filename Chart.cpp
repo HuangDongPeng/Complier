@@ -3,6 +3,7 @@
 #include <iostream>	
 using namespace std;
 
+
 stack<Content*> s;
 hash_map<int, Content*> hashMap;  
 hash_map<int, Content*> blockMap;
@@ -19,6 +20,7 @@ void BuildNewContent(char *name,int type,double value) {
 void InserContent(Content * content) {
 	s.push(content);
 	InsertContent_HashMap(content);
+	ShowChart();
 }
 //删除标识符
 void DeleteContent() {
@@ -165,15 +167,15 @@ void ShowChart() {
 		cout << String2Char(tmp->name) << "	";
 
 		if (tmp->type == Z) {
-			cout << "Z	" << *(int*)tmp->pValue << "	";
+			cout << "Z	" << "整数" << "	";
 		}
 		else if (tmp->type == F)
 		{
-			cout << "F	" << *(float*)tmp->pValue << "	";
+			cout << "F	" << "浮点数" << "	";
 		}
 		else if (tmp->type == C)
 		{
-			cout << "C	" << *(char**)tmp->pValue << "	";
+			cout << "C	" << "字符串" << "	";
 		}
 		cout << tmp->address << "	";
 		if (tmp->link == nullptr)
@@ -244,6 +246,3 @@ Content::~Content()
 
 };
 
-void ChartInsert(char * name,int type) {
-	Content * newContent = new Content(name, type, 0, 0);
-}

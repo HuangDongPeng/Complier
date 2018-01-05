@@ -19,14 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\SoftWare\Parser Generator 2\Test\Chart.cpp" />
+    <ClCompile Include="Chart.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="myComplier.cpp" />
     <ClCompile Include="parser.tab.cpp" />
     <ClCompile Include="scanner.flex.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\SoftWare\Parser Generator 2\Test\Chart.h" />
+    <ClInclude Include="Chart.h" />
     <ClInclude Include="myCompiler.h" />
     <ClInclude Include="parser.tab.h" />
   </ItemGroup>

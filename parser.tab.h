@@ -47,33 +47,50 @@ extern int yydebug;
       know about them.  */
    enum yytokentype {
      ID = 258,
-     INT = 259,
-     FLOAT = 260,
-     CHAR = 261,
-     ADD = 262,
-     SUB = 263,
-     MUL = 264,
-     DIV = 265,
-     ASSIGN = 266,
-     OR = 267,
-     AND = 268,
-     NOT = 269,
-     LESS = 270,
-     LE = 271,
-     GREAT = 272,
-     GE = 273,
-     EQ = 274,
-     NQ = 275,
-     IF = 276,
-     ELSE = 277,
-     WHILE = 278,
-     NEWLINE = 279
+     NUMBER = 259,
+     CHARACTER = 260,
+     INT = 261,
+     FLOAT = 262,
+     CHAR = 263,
+     ADD = 264,
+     SUB = 265,
+     MUL = 266,
+     DIV = 267,
+     ASSIGN = 268,
+     OR = 269,
+     AND = 270,
+     NOT = 271,
+     LESS = 272,
+     LE = 273,
+     GREAT = 274,
+     GE = 275,
+     EQ = 276,
+     NQ = 277,
+     IF = 278,
+     ELSE = 279,
+     WHILE = 280,
+     NEWLINE = 281
    };
 #endif
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+{
+/* Line 2058 of yacc.c  */
+#line 19 "parser.y"
+
+	int intVal;
+	double doubleVal;
+	char strVal[20];
+	char singleChar;
+
+
+
+
+/* Line 2058 of yacc.c  */
+#line 93 "parser.tab.h"
+} YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
