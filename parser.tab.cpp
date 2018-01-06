@@ -494,7 +494,7 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    60,    60,    61,    64,    65,    66,    70,    71,    76,
-      77,    78,    79,    80,    81,    82,    86,    87,    88
+      77,    78,    79,    80,    81,    82,   106,   107,   108
 };
 #endif
 
@@ -1465,30 +1465,50 @@ yyreduce:
   case 15:
 /* Line 1792 of yacc.c  */
 #line 82 "parser.y"
-    {(yyval.data).dVal=*(float*)FindContent((yyvsp[(1) - (1)].strVal))->pValue;}
+    {
+											Content* newContent=FindContent((yyvsp[(1) - (1)].strVal));
+											if(newContent==nullptr){cout<<"unDeclare"<<endl;}
+											else
+											{
+												if(newContent->type==C)
+												    {
+													(yyval.data).cVal=*(char*)newContent->pValue;
+													cout<<"ID value: "<<(yyval.data).cVal;
+													}
+												else if(newContent->type==F){
+													(yyval.data).dVal=*(float*)newContent->pValue;
+													cout<<"ID value: "<<(yyval.data).dVal;
+													}
+												else if(newContent->type==Z){
+													(yyval.data).dVal=*(int*)newContent->pValue;
+													cout<<"ID value: "<<(yyval.data).dVal;
+
+													}
+											}
+										}
     break;
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 86 "parser.y"
+#line 106 "parser.y"
     {tmpContent->type=C;}
     break;
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 87 "parser.y"
+#line 107 "parser.y"
     {tmpContent->type=Z;}
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 88 "parser.y"
+#line 108 "parser.y"
     {tmpContent->type=F;}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1492 "parser.tab.cpp"
+#line 1512 "parser.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1720,7 +1740,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 92 "parser.y"
+#line 112 "parser.y"
 
 
 void SetValue(double dVar=0,char cVar=' ')

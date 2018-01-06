@@ -61,13 +61,13 @@ sentence: declare
 		|IF '(' expression ')'
 		;
 
-declare	:  declare type	ID 	NEWLINE						{tmpContent->name=$3;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
-		|  declare ID ASSIGN expression	NEWLINE			{SetValueAfterDeclare($2,$4.dVal,$4.cVal);tmpContent=new Content();}
+declare	:  declare type	ID 	NEWLINE							 {tmpContent->name=$3;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
+		|  declare ID ASSIGN expression	NEWLINE				 {SetValueAfterDeclare($2,$4.dVal,$4.cVal);tmpContent=new Content();}
 		|  declare type ID ASSIGN expression NEWLINE         { tmpContent->name=$3;
-														  SetValue($5.dVal,$5.cVal);
-														  InserContent(tmpContent);
-														  tmpContent=new Content();}
-		| declare expression NEWLINE					
+															  SetValue($5.dVal,$5.cVal);
+															  InserContent(tmpContent);
+															  tmpContent=new Content();}
+		| declare expression NEWLINE						
 		|
 		;
 
@@ -79,7 +79,27 @@ expression  :expression ADD expression	{$$.dVal=$1.dVal+$3.dVal;}
 			|expression DIV expression	{$$.dVal=$1.dVal/$3.dVal;}
 			|NUMBER						{$$.dVal=$1;}
 			|CHARACTER					{$$.cVal=$1;}
-			|ID							{$$.dVal=*(float*)FindContent($1)->pValue;}
+			|ID							{
+											Content* newContent=FindContent($1);
+											if(newContent==nullptr){cout<<"unDeclare"<<endl;}
+											else
+											{
+												if(newContent->type==C)
+												    {
+													$$.cVal=*(char*)newContent->pValue;
+													cout<<"ID value: "<<$$.cVal;
+													}
+												else if(newContent->type==F){
+													$$.dVal=*(float*)newContent->pValue;
+													cout<<"ID value: "<<$$.dVal;
+													}
+												else if(newContent->type==Z){
+													$$.dVal=*(int*)newContent->pValue;
+													cout<<"ID value: "<<$$.dVal;
+
+													}
+											}
+										}
 			;
 
 
