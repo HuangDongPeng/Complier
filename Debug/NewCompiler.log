@@ -1,10 +1,12 @@
 ﻿  Process "parser.y" bison file
   parser.tab.cpp
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(61): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(73): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1125): warning C4065: switch 语句包含“default”但是未包含“case”标签
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(126): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(131): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(62): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(74): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1106): warning C4065: switch 语句包含“default”但是未包含“case”标签
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(91): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(96): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(122): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(127): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
   正在生成代码...
   正在编译...
   main.cpp

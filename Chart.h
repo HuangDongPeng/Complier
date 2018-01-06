@@ -25,6 +25,7 @@ union DataType
 };
 
 
+
 class Content
 {
 public:
@@ -103,6 +104,7 @@ void ChartInsert(char * name, int type);
 
 
 Content * FindContent(string name);
+
 
 
 

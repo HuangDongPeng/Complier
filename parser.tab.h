@@ -47,7 +47,7 @@ extern int yydebug;
       know about them.  */
    enum yytokentype {
      ID = 258,
-     NUMBER = 259,
+     INTNUMBER = 259,
      FLOATNUMBER = 260,
      CHARACTER = 261,
      INT = 262,
@@ -79,7 +79,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 23 "parser.y"
+#line 28 "parser.y"
 
 	int intVal;
 	double doubleVal;
@@ -87,6 +87,7 @@ typedef union YYSTYPE
 	char charVal;
 
 	union{
+	class Content* content;
 	double dVal;
 	int iVal;
 	char cVal;
@@ -94,7 +95,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 98 "parser.tab.h"
+#line 99 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

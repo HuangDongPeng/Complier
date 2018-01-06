@@ -12,12 +12,17 @@ Content * tmpContent=new Content();
 extern void InserContent(Content * content);
 void SetValue(double ,char );
 void SetValueAfterDeclare(char* ,double ,char);
+Content* SetValueWithReturn(double,char ,Property );
+
 
 extern int yyerror(char *);
 extern int yylex();
 
+
+
 using namespace std;
 %}
+
 
 %union
 {
@@ -27,6 +32,7 @@ using namespace std;
 	char charVal;
 
 	union{
+	class Content* content;
 	double dVal;
 	int iVal;
 	char cVal;
@@ -34,7 +40,7 @@ using namespace std;
 }
 
 %token <strVal>ID 
-%token <doubleVal>NUMBER 
+%token <intVal>INTNUMBER 
 %token <doubleVal>FLOATNUMBER
 %token <charVal>CHARACTER
 %token INT FLOAT CHAR
@@ -57,56 +63,15 @@ using namespace std;
 
 %%
 
-sentence: declare
-		|IF '(' expression ')'
-		;
-
-declare	:  declare type	ID 	NEWLINE							 {tmpContent->name=$3;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
-		|  declare ID ASSIGN expression	NEWLINE				 {SetValueAfterDeclare($2,$4.dVal,$4.cVal);tmpContent=new Content();}
-		|  declare type ID ASSIGN expression NEWLINE         { tmpContent->name=$3;
-															  SetValue($5.dVal,$5.cVal);
-															  InserContent(tmpContent);
-															  tmpContent=new Content();}
-		| declare expression NEWLINE						
+sentence: sentence expression NEWLINE
 		|
 		;
 
+expression: expression ADD expression	{$$.content=SetValueWithReturn(0,' ',Z);}
+			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);cout<<"int NUBER VALUE: "<<*(int *)$$.content->pValue<<endl;}
+			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);cout<<" float NUBER VALUE: "<<*(float *)$$.content->pValue<<endl;}
+			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);cout<<"CHAR VALUE: "<<*(char *)$$.content->pValue<<endl;}
 
-
-expression  :expression ADD expression	{$$.dVal=$1.dVal+$3.dVal;}
-			|expression SUB expression	{$$.dVal=$1.dVal-$3.dVal;}
-			|expression MUL expression	{$$.dVal=$1.dVal*$3.dVal;}
-			|expression DIV expression	{$$.dVal=$1.dVal/$3.dVal;}
-			|NUMBER						{$$.dVal=$1;}
-			|CHARACTER					{$$.cVal=$1;}
-			|ID							{
-											Content* newContent=FindContent($1);
-											if(newContent==nullptr){cout<<"unDeclare"<<endl;}
-											else
-											{
-												if(newContent->type==C)
-												    {
-													$$.cVal=*(char*)newContent->pValue;
-													cout<<"ID value: "<<$$.cVal;
-													}
-												else if(newContent->type==F){
-													$$.dVal=*(float*)newContent->pValue;
-													cout<<"ID value: "<<$$.dVal;
-													}
-												else if(newContent->type==Z){
-													$$.dVal=*(int*)newContent->pValue;
-													cout<<"ID value: "<<$$.dVal;
-
-													}
-											}
-										}
-			;
-
-
-type	:	 CHAR    {tmpContent->type=C;}
-			|INT    {tmpContent->type=Z;}
-			|FLOAT  {tmpContent->type=F;}  
-			;
 
 
 %%
@@ -139,6 +104,39 @@ void SetValue(double dVar=0,char cVar=' ')
 		break;
 	}
 }
+
+Content* SetValueWithReturn(double dVar=0,char cVar=' ',Property _type=Z)
+{
+	Content* tmp = new Content();
+	tmp->type=_type;
+
+    float* pTmpValueF;
+	int* pTmpValueI;
+	char *pTmpChar;
+
+	switch (tmp->type)
+	{
+	case Z:
+		tmp->pValue = malloc(sizeof(int));
+		pTmpValueI = (int*)tmp->pValue;
+		*pTmpValueI = dVar;
+		break;
+	case F:
+		tmp->pValue = malloc(sizeof(float));
+		pTmpValueF = (float*)tmp->pValue;
+		*pTmpValueF = dVar;
+		break;
+	case C:
+		tmp->pValue = malloc(sizeof(char));
+		pTmpChar = (char*)tmp->pValue;
+		*pTmpChar = cVar;
+		break;
+	default:
+		break;
+	}
+	return tmp;
+}
+
 
 void SetValueAfterDeclare(char* name,double dVar=0,char cVar=' '){
 	tmpContent=FindContent(name);
