@@ -76,6 +76,10 @@
 Content * tmpContent=new Content();
 
 extern void InserContent(Content * content);
+float GetValue(Content *content);
+char GetValueChar(Content *content);
+
+
 void SetValue(double ,char );
 void SetValueAfterDeclare(char* ,double ,char);
 Content* SetValueWithReturn(double,char ,Property );
@@ -89,7 +93,7 @@ extern int yylex();
 using namespace std;
 
 /* Line 371 of yacc.c  */
-#line 93 "parser.tab.cpp"
+#line 97 "parser.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -158,7 +162,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 28 "parser.y"
+#line 32 "parser.y"
 
 	int intVal;
 	double doubleVal;
@@ -174,7 +178,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 178 "parser.tab.cpp"
+#line 182 "parser.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -202,7 +206,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 206 "parser.tab.cpp"
+#line 210 "parser.tab.cpp"
 
 #ifdef short
 # undef short
@@ -492,7 +496,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    66,    66,    67,    70,    71,    72,    73
+       0,    70,    70,    71,    74,    86,    87,    88
 };
 #endif
 
@@ -1388,31 +1392,41 @@ yyreduce:
     {
         case 4:
 /* Line 1792 of yacc.c  */
-#line 70 "parser.y"
-    {(yyval.data).content=SetValueWithReturn(0,' ',Z);}
+#line 74 "parser.y"
+    {
+										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
+										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
+										 float result=tmpValue1+tmpValue2;
+										 Property type=Z;
+										 if((yyvsp[(1) - (3)].data).content->type==F||(yyvsp[(3) - (3)].data).content->type==F){
+											type=F; 
+										 }
+										 (yyval.data).content=SetValueWithReturn(result,' ',type);
+										 cout<<"result is : "<<GetValue((yyval.data).content)<<endl;
+										}
     break;
 
   case 5:
 /* Line 1792 of yacc.c  */
-#line 71 "parser.y"
-    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].intVal),' ',Z);cout<<"int NUBER VALUE: "<<*(int *)(yyval.data).content->pValue<<endl;}
+#line 86 "parser.y"
+    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].intVal),' ',Z);}
     break;
 
   case 6:
 /* Line 1792 of yacc.c  */
-#line 72 "parser.y"
-    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].doubleVal),' ',F);cout<<" float NUBER VALUE: "<<*(float *)(yyval.data).content->pValue<<endl;}
+#line 87 "parser.y"
+    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].doubleVal),' ',F);}
     break;
 
   case 7:
 /* Line 1792 of yacc.c  */
-#line 73 "parser.y"
-    {(yyval.data).content=SetValueWithReturn(0,(yyvsp[(1) - (1)].charVal),C);cout<<"CHAR VALUE: "<<*(char *)(yyval.data).content->pValue<<endl;}
+#line 88 "parser.y"
+    {(yyval.data).content=SetValueWithReturn(0,(yyvsp[(1) - (1)].charVal),C);}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1416 "parser.tab.cpp"
+#line 1430 "parser.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1644,7 +1658,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 77 "parser.y"
+#line 92 "parser.y"
 
 
 void SetValue(double dVar=0,char cVar=' ')
@@ -1712,4 +1726,23 @@ Content* SetValueWithReturn(double dVar=0,char cVar=' ',Property _type=Z)
 void SetValueAfterDeclare(char* name,double dVar=0,char cVar=' '){
 	tmpContent=FindContent(name);
 	SetValue(dVar,cVar);
+}
+
+float GetValue(Content *content)
+{
+	switch (content->type)
+	{
+	case Z:
+		return *(int*)content->pValue;
+		break;
+	case F:
+		return *(float*)content->pValue;
+	default:
+		break;
+	}
+	return 0;
+}
+
+char GetValueChar(Content *content) {
+	return *(char*)content->pValue;
 }

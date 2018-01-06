@@ -10,6 +10,10 @@
 Content * tmpContent=new Content();
 
 extern void InserContent(Content * content);
+float GetValue(Content *content);
+char GetValueChar(Content *content);
+
+
 void SetValue(double ,char );
 void SetValueAfterDeclare(char* ,double ,char);
 Content* SetValueWithReturn(double,char ,Property );
@@ -64,13 +68,25 @@ using namespace std;
 %%
 
 sentence: sentence expression NEWLINE
+		| NEWLINE
 		|
 		;
 
-expression: expression ADD expression	{$$.content=SetValueWithReturn(0,' ',Z);}
-			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);cout<<"int NUBER VALUE: "<<*(int *)$$.content->pValue<<endl;}
-			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);cout<<" float NUBER VALUE: "<<*(float *)$$.content->pValue<<endl;}
-			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);cout<<"CHAR VALUE: "<<*(char *)$$.content->pValue<<endl;}
+expression: expression ADD expression	{
+										 float tmpValue1=GetValue($1.content);
+										 float tmpValue2=GetValue($3.content);
+										 float result=tmpValue1+tmpValue2;
+										 Property type=Z;
+										 if($1.content->type==F||$3.content->type==F){
+											type=F; 
+										 }
+										 $$.content=SetValueWithReturn(result,' ',type);
+										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										}
+				
+			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);}
+			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);}
+			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);}
 
 
 
@@ -141,4 +157,23 @@ Content* SetValueWithReturn(double dVar=0,char cVar=' ',Property _type=Z)
 void SetValueAfterDeclare(char* name,double dVar=0,char cVar=' '){
 	tmpContent=FindContent(name);
 	SetValue(dVar,cVar);
+}
+
+float GetValue(Content *content)
+{
+	switch (content->type)
+	{
+	case Z:
+		return *(int*)content->pValue;
+		break;
+	case F:
+		return *(float*)content->pValue;
+	default:
+		break;
+	}
+	return 0;
+}
+
+char GetValueChar(Content *content) {
+	return *(char*)content->pValue;
 }
