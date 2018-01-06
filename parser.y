@@ -72,7 +72,7 @@ using namespace std;
 %%
 
 sentence:sentence expression NEWLINE
-		|sentence bool NEWLINE
+		|sentence bool NEWLINE			{cout<<$2<<endl;}
 		|sentence declare NEWLINE
 		|sentence ID ASSIGN expression NEWLINE
 										{
@@ -89,46 +89,12 @@ sentence:sentence expression NEWLINE
 										}
 		|
 		;				
-bool: expression EQ expression			{
-										switch($1.content->type)
-										{
-										case Z:
-										case F:
-											   if($3.content->type==C){
-													$$=false;
-													break;
-											   }
-											   else{
-													float var1=GetValue($1.content);
-													float var2=GetValue($3.content);
-													if(var1==var2){
-													$$=true;
-													cout<<"equ"<<endl;
-													}
-													else{
-													$$=false;
-													cout<<"not equ"<<endl;
+bool: expression EQ expression			{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1==var2)$$=true;else{$$=false;}}
+	| expression LESS expression		{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1<var2)$$=true;else{$$=false;}}
+	| expression LE expression			{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1<=var2)$$=true;else{$$=false;}}
+	| expression GREAT expression		{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1>var2)$$=true;else{$$=false;}}
+	| expression GE expression			{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1>=var2)$$=true;else{$$=false;}}
 
-													}
-											   }
-										break;
-										case C:
-											  if($3.content->type!=C){
-											  $$=false;
-											  break;
-											  }
-											  else{
-													char var1=GetValueChar($1.content);
-													char var2=GetValueChar($3.content);
-													if(var1==var2){
-													$$=true;
-													}
-													else{
-													$$=false;
-													}
-											  }
-										}
-										}
 	;
 
 declare: dataType ID					{tmpContent->name=$2;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
