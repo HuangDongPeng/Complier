@@ -3,6 +3,17 @@
 #include <iostream>	
 using namespace std;
 
+struct QuadNum
+{
+	int op;
+	void* arg1;
+	void* arg2;
+	void* result;
+	QuadNum* next = nullptr;
+};
+QuadNum* quadNum = (QuadNum*)malloc(sizeof(QuadNum));
+QuadNum* baseQuad = quadNum;
+
 
 stack<Content*> s;
 hash_map<int, Content*> hashMap;  
@@ -15,6 +26,35 @@ static int index = 0;
 void BuildNewContent(char *name,int type,double value) {
 	Content *newContent = new Content(name, type, nullptr, value);
 	InserContent(newContent);
+}
+
+void InsertNewQuad(int op, void* arg1, void*  arg2, void*  result)
+{
+	cout << "arg1 address " << arg1 << endl;
+	quadNum->op = op;
+	quadNum->arg1 = arg1;
+	quadNum->arg2 =arg2;
+	quadNum->result = result;
+	quadNum->next = (QuadNum*)malloc(sizeof(QuadNum));
+	quadNum = quadNum->next;
+	quadNum->next = nullptr;
+	ShowQuadTable();
+}
+void ShowQuadTable()
+{
+	int index = 1;
+	QuadNum* tmp = baseQuad;
+	cout<<"index	" << "op	" << "arg1		" << "arg2		" << "result		" << endl;
+	while (tmp->next != nullptr)
+	{
+		cout << index<<"	";
+		cout << tmp->op << "	";
+		cout << tmp->arg1 <<"	";
+		cout << tmp->arg2 << "	";
+		cout << tmp->result << "	" << endl;
+		tmp = tmp->next;
+		index++;
+	}
 }
 //添加新标识符
 void InserContent(Content * content) {

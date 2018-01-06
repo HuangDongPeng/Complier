@@ -6,15 +6,18 @@
 #include "myCompiler.h"
 #include "Chart.h"
 
+extern struct QuadNum* quadNum;
+extern struct QuadNum* baseQuad;
+
 
 Content * tmpContent=new Content();
 
 extern void InserContent(Content * content);
+extern void InsertNewQuad(int op, void* arg1, void* arg2, void* result);
+
 float GetValue(Content *content);
 char GetValueChar(Content *content);
-
-
-void SetValue(double ,char );
+void SetValue(double ,char);
 void SetValueAfterDeclare(char* ,double ,char);
 Content* SetValueWithReturn(double,char ,Property );
 
@@ -69,8 +72,21 @@ using namespace std;
 
 sentence:sentence expression NEWLINE
 		|sentence declare NEWLINE
+		|sentence ID ASSIGN expression NEWLINE
+										{
+
+										if($4.content->type==C){
+										char value=GetValueChar($4.content);
+										SetValueAfterDeclare($2,0,value);
+										}
+										else{
+										float value=GetValue($4.content);
+										SetValueAfterDeclare($2,value,' ');
+										}
+										 tmpContent=new Content();
+										}
 		|
-		;
+		;				
 
 declare: dataType ID					{tmpContent->name=$2;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
 		|dataType ID ASSIGN expression  {tmpContent->name=$2;
@@ -82,13 +98,17 @@ declare: dataType ID					{tmpContent->name=$2;SetValue(0,' ');InserContent(tmpCo
 										 float value=GetValue($4.content);
 										 SetValue(value,' ');
 										 }
-										 InserContent(tmpContent);tmpContent=new Content();}
+										 InserContent(tmpContent);
+										 tmpContent=new Content();
+										 }
 		;
 
 dataType:INT     {tmpContent->type=Z;}
 		|CHAR    {tmpContent->type=C;}
 		|FLOAT	 {tmpContent->type=F;}
 		;
+
+
 
 expression: expression ADD expression	{
 										 float tmpValue1=GetValue($1.content);
@@ -99,7 +119,7 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										 InsertNewQuad(OP_ADD, $1.content->address,$3.content->address,$$.content->address);
 										}
 			| expression SUB expression	{
 										 float tmpValue1=GetValue($1.content);

@@ -23,8 +23,11 @@ union DataType
 	char charVal;
 	float floatVal;
 };
+/////////////////////////////ËÄÔªÊý////////////
 
 
+
+void ShowQuadTable();
 
 class Content
 {
