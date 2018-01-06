@@ -67,28 +67,28 @@ using namespace std;
 
 %%
 
-sentence: sentence expression NEWLINE
-		| 
+sentence:sentence expression NEWLINE
+		|sentence declare NEWLINE
+		|
 		;
 
-declare: type ID			
-		|type ID ASSIGN expression	{
-									tmpContent->name=$2;
-									if(tmpContent->type==C){
-									   char result=GetValueChar($4.content);
-									   SetValue(0,result);
-									}
-									else{
-									   float result=GetValue($4.content);
-									   SetValue(result,' ');
-									}
+declare: dataType ID					{tmpContent->name=$2;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
+		|dataType ID ASSIGN expression  {tmpContent->name=$2;
+										 if(tmpContent->type==C){
+										 char value=GetValueChar($4.content);
+										 SetValue(0,value);
+										 }
+										 else{
+										 float value=GetValue($4.content);
+										 SetValue(value,' ');
+										 }
+										 InserContent(tmpContent);tmpContent=new Content();}
 		;
 
-type: CHAR	{tmpContent->type=C;}
-	|FLOAT	{tmpContent->type=F;}
-	|INT	{tmpContent->type=Z;}
-
-
+dataType:INT     {tmpContent->type=Z;}
+		|CHAR    {tmpContent->type=C;}
+		|FLOAT	 {tmpContent->type=F;}
+		;
 
 expression: expression ADD expression	{
 										 float tmpValue1=GetValue($1.content);
@@ -138,7 +138,7 @@ expression: expression ADD expression	{
 			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);}
 			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);}
 			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);}
-
+			;
 
 
 %%
