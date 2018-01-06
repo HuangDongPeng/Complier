@@ -37,6 +37,7 @@ using namespace std;
 	double doubleVal;
 	char strVal[20];
 	char charVal;
+	bool booler;
 
 	union{
 	class Content* content;
@@ -66,11 +67,12 @@ using namespace std;
 
 
 %type <data>expression
-
+%type <booler>bool
 
 %%
 
 sentence:sentence expression NEWLINE
+		|sentence bool NEWLINE
 		|sentence declare NEWLINE
 		|sentence ID ASSIGN expression NEWLINE
 										{
@@ -87,6 +89,47 @@ sentence:sentence expression NEWLINE
 										}
 		|
 		;				
+bool: expression EQ expression			{
+										switch($1.content->type)
+										{
+										case Z:
+										case F:
+											   if($3.content->type==C){
+													$$=false;
+													break;
+											   }
+											   else{
+													float var1=GetValue($1.content);
+													float var2=GetValue($3.content);
+													if(var1==var2){
+													$$=true;
+													cout<<"equ"<<endl;
+													}
+													else{
+													$$=false;
+													cout<<"not equ"<<endl;
+
+													}
+											   }
+										break;
+										case C:
+											  if($3.content->type!=C){
+											  $$=false;
+											  break;
+											  }
+											  else{
+													char var1=GetValueChar($1.content);
+													char var2=GetValueChar($3.content);
+													if(var1==var2){
+													$$=true;
+													}
+													else{
+													$$=false;
+													}
+											  }
+										}
+										}
+	;
 
 declare: dataType ID					{tmpContent->name=$2;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
 		|dataType ID ASSIGN expression  {tmpContent->name=$2;

@@ -2,12 +2,12 @@
   parser.tab.cpp
 c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(65): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
 c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(77): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1131): warning C4065: switch 语句包含“default”但是未包含“case”标签
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(183): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(188): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(214): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(219): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(245): warning C4244: “return”: 从“int”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1142): warning C4065: switch 语句包含“default”但是未包含“case”标签
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(226): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(231): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(257): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(262): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(288): warning C4244: “return”: 从“int”转换到“float”，可能丢失数据
   正在生成代码...
   正在编译...
   main.cpp

@@ -85,6 +85,7 @@ typedef union YYSTYPE
 	double doubleVal;
 	char strVal[20];
 	char charVal;
+	bool booler;
 
 	union{
 	class Content* content;
@@ -95,7 +96,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 99 "parser.tab.h"
+#line 100 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
