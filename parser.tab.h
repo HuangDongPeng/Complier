@@ -86,9 +86,15 @@ typedef union YYSTYPE
 	char strVal[20];
 	char charVal;
 
+	union{
+	double dVal;
+	int iVal;
+	char cVal;
+	}data;
+
 
 /* Line 2058 of yacc.c  */
-#line 92 "parser.tab.h"
+#line 98 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

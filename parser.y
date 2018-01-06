@@ -25,6 +25,12 @@ using namespace std;
 	double doubleVal;
 	char strVal[20];
 	char charVal;
+
+	union{
+	double dVal;
+	int iVal;
+	char cVal;
+	}data;
 }
 
 %token <strVal>ID 
@@ -40,17 +46,19 @@ using namespace std;
 %token '(' ')'
 %token NEWLINE
 
+
+%left IF
 %left ADD SUB
 %left MUL DIV
 
 
-%type <doubleVal>expression
+%type <data>expression
+%type <data>value
 
 %%
 
-
 declare	:  declare type	ID 	NEWLINE						{tmpContent->name=$3;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
-		|  declare ID ASSIGN expression	NEWLINE			{SetValueAfterDeclare($2,$4,' ');tmpContent=new Content();}
+		|  declare ID ASSIGN expression	NEWLINE			{SetValueAfterDeclare($2,$4.dVal,$4.cVal);tmpContent=new Content();}
 		|  declare type ID ASSIGN value NEWLINE         { tmpContent->name=$3;
 														  SetValue(yylval.doubleVal,yylval.charVal);
 														  InserContent(tmpContent);
@@ -60,11 +68,12 @@ declare	:  declare type	ID 	NEWLINE						{tmpContent->name=$3;SetValue(0,' ');In
 
 
 
-expression  :expression ADD expression	{$$=$1+$3;cout<<"result is : "<<$$<<endl;}
-			|expression SUB expression	{$$=$1-$3;cout<<"result is : "<<$$<<endl;}
-			|expression MUL expression	{$$=$1*$3;cout<<"result is : "<<$$<<endl;}
-			|expression DIV expression	{$$=$1/$3;cout<<"result is : "<<$$<<endl;}
-			|NUMBER
+expression  :expression ADD expression	{$$.dVal=$1.dVal+$3.dVal;}
+			|expression SUB expression	{$$.dVal=$1.dVal-$3.dVal;}
+			|expression MUL expression	{$$.dVal=$1.dVal*$3.dVal;}
+			|expression DIV expression	{$$.dVal=$1.dVal/$3.dVal;}
+			|NUMBER						{$$.dVal=$1;}
+			|CHARACTER					{$$.cVal=$1;}
 			;
 
 
@@ -73,8 +82,8 @@ type	:	 CHAR    {tmpContent->type=C;}
 			|FLOAT  {tmpContent->type=F;}  
 			;
 
-value		:   CHARACTER
-		    |	NUMBER
+value		:   CHARACTER {$$.cVal=$1;}
+		    |	NUMBER    {$$.dVal=$1;}
 		    ;
 %%
 
