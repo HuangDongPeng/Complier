@@ -30,7 +30,6 @@ void BuildNewContent(char *name,int type,double value) {
 
 void InsertNewQuad(int op, void* arg1, void*  arg2, void*  result)
 {
-	cout << "arg1 address " << arg1 << endl;
 	quadNum->op = op;
 	quadNum->arg1 = arg1;
 	quadNum->arg2 =arg2;

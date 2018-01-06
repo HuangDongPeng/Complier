@@ -95,6 +95,8 @@ declare: dataType ID					{tmpContent->name=$2;SetValue(0,' ');InserContent(tmpCo
 										 SetValue(0,value);
 										 }
 										 else{
+										 cout<<"address is: "<<$4.content->address<<endl;
+
 										 float value=GetValue($4.content);
 										 SetValue(value,' ');
 										 }
@@ -130,7 +132,8 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										 InsertNewQuad(OP_SUB, $1.content->address,$3.content->address,$$.content->address);
+
 										}
 			|expression MUL expression	{
 										 float tmpValue1=GetValue($1.content);
@@ -141,7 +144,8 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										 InsertNewQuad(OP_MUL, $1.content->address,$3.content->address,$$.content->address);
+
 										}
 			|expression DIV expression	{
 										 float tmpValue1=GetValue($1.content);
@@ -152,12 +156,13 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										 InsertNewQuad(OP_DIV, $1.content->address,$3.content->address,$$.content->address);
 										}
 						
 			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);}
 			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);}
 			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);}
+			| ID						{$$.content=FindContent($1);if($$.content==nullptr)yyerror("undeclare symbol");}
 			;
 
 
@@ -227,6 +232,8 @@ Content* SetValueWithReturn(double dVar=0,char cVar=' ',Property _type=Z)
 
 void SetValueAfterDeclare(char* name,double dVar=0,char cVar=' '){
 	tmpContent=FindContent(name);
+	if(tmpContent==nullptr)
+		yyerror("un declare!");
 	SetValue(dVar,cVar);
 }
 
