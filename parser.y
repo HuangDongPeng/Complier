@@ -53,16 +53,21 @@ using namespace std;
 
 
 %type <data>expression
-%type <data>value
+
 
 %%
 
+sentence: declare
+		|IF '(' expression ')'
+		;
+
 declare	:  declare type	ID 	NEWLINE						{tmpContent->name=$3;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
 		|  declare ID ASSIGN expression	NEWLINE			{SetValueAfterDeclare($2,$4.dVal,$4.cVal);tmpContent=new Content();}
-		|  declare type ID ASSIGN value NEWLINE         { tmpContent->name=$3;
-														  SetValue(yylval.doubleVal,yylval.charVal);
+		|  declare type ID ASSIGN expression NEWLINE         { tmpContent->name=$3;
+														  SetValue($5.dVal,$5.cVal);
 														  InserContent(tmpContent);
 														  tmpContent=new Content();}
+		| declare expression NEWLINE					
 		|
 		;
 
@@ -74,6 +79,7 @@ expression  :expression ADD expression	{$$.dVal=$1.dVal+$3.dVal;}
 			|expression DIV expression	{$$.dVal=$1.dVal/$3.dVal;}
 			|NUMBER						{$$.dVal=$1;}
 			|CHARACTER					{$$.cVal=$1;}
+			|ID							{$$.dVal=*(float*)FindContent($1)->pValue;}
 			;
 
 
@@ -82,9 +88,7 @@ type	:	 CHAR    {tmpContent->type=C;}
 			|FLOAT  {tmpContent->type=F;}  
 			;
 
-value		:   CHARACTER {$$.cVal=$1;}
-		    |	NUMBER    {$$.dVal=$1;}
-		    ;
+
 %%
 
 void SetValue(double dVar=0,char cVar=' ')

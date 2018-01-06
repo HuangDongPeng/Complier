@@ -40,9 +40,8 @@ comment_inline		"//".*\n
 "char"		{return (CHAR);}
 "float"		{return (FLOAT);}
 
-{interger}	{yylval.doubleVal=atof(yytext);return NUMBER;}	
 {char}		{yylval.charVal=yytext[1];return CHARACTER;}
-{number}	{yylval.doubleVal= atof(yytext);return FLOATNUMBER;}
+{number}	{yylval.doubleVal= atof(yytext);return NUMBER;}
 {id}		{strcpy(yylval.strVal,yytext);return (ID);}
 
 "+"		{return ADD;}
