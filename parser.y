@@ -68,9 +68,27 @@ using namespace std;
 %%
 
 sentence: sentence expression NEWLINE
-		| NEWLINE
-		|
+		| 
 		;
+
+declare: type ID			
+		|type ID ASSIGN expression	{
+									tmpContent->name=$2;
+									if(tmpContent->type==C){
+									   char result=GetValueChar($4.content);
+									   SetValue(0,result);
+									}
+									else{
+									   float result=GetValue($4.content);
+									   SetValue(result,' ');
+									}
+		;
+
+type: CHAR	{tmpContent->type=C;}
+	|FLOAT	{tmpContent->type=F;}
+	|INT	{tmpContent->type=Z;}
+
+
 
 expression: expression ADD expression	{
 										 float tmpValue1=GetValue($1.content);
@@ -83,7 +101,40 @@ expression: expression ADD expression	{
 										 $$.content=SetValueWithReturn(result,' ',type);
 										 cout<<"result is : "<<GetValue($$.content)<<endl;
 										}
-				
+			| expression SUB expression	{
+										 float tmpValue1=GetValue($1.content);
+										 float tmpValue2=GetValue($3.content);
+										 float result=tmpValue1-tmpValue2;
+										 Property type=Z;
+										 if($1.content->type==F||$3.content->type==F){
+											type=F; 
+										 }
+										 $$.content=SetValueWithReturn(result,' ',type);
+										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										}
+			|expression MUL expression	{
+										 float tmpValue1=GetValue($1.content);
+										 float tmpValue2=GetValue($3.content);
+										 float result=tmpValue1*tmpValue2;
+										 Property type=Z;
+										 if($1.content->type==F||$3.content->type==F){
+											type=F; 
+										 }
+										 $$.content=SetValueWithReturn(result,' ',type);
+										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										}
+			|expression DIV expression	{
+										 float tmpValue1=GetValue($1.content);
+										 float tmpValue2=GetValue($3.content);
+										 float result=tmpValue1/tmpValue2;
+										 Property type=Z;
+										 if($1.content->type==F||$3.content->type==F){
+											type=F; 
+										 }
+										 $$.content=SetValueWithReturn(result,' ',type);
+										 cout<<"result is : "<<GetValue($$.content)<<endl;
+										}
+						
 			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);}
 			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);}
 			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);}
