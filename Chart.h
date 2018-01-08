@@ -6,7 +6,8 @@
 #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
 
 #define HASHLENGTH 13
-#define BEGIN_ADRESS 2000
+#define SYMTABLE_BEGIN_ADRESS 2000
+#define CONST_BEGIN_ADDRESS 5000
 
 #include <hash_map>
 #include <unordered_map>
@@ -17,7 +18,8 @@ enum Property
 {
 	Z,
 	F,
-	C
+	C,
+	CONST
 };
 
 union DataType
@@ -28,7 +30,8 @@ union DataType
 };
 /////////////////////////////ËÄÔªÊý////////////
 
-static int symTableAddress=BEGIN_ADRESS;
+static int symTableAddress= SYMTABLE_BEGIN_ADRESS;
+static int constTableAdress = CONST_BEGIN_ADDRESS;
 
 void ShowQuadTable();
 
@@ -86,7 +89,11 @@ inline Content::Content(char * _name, int _type, Content * _link, float _value)
 		pTmpChar = (char*)pValue;
 		*pTmpChar = _value;
 		width = 1;
-
+		break;
+	case 4:
+		type = CONST;
+		value = _value;
+		width = 1;
 		break;
 	default:
 		break;
@@ -94,6 +101,7 @@ inline Content::Content(char * _name, int _type, Content * _link, float _value)
 	link = _link;
 }
 
+void InsertConstNum(Content *content);
 
 void InserContent(Content * content);
 

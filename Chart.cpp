@@ -6,9 +6,9 @@ using namespace std;
 struct QuadNum
 {
 	int op;
-	void* arg1;
-	void* arg2;
-	void* result;
+	int arg1;
+	int arg2;
+	int result;
 	QuadNum* next = nullptr;
 };
 QuadNum* quadNum = (QuadNum*)malloc(sizeof(QuadNum));
@@ -28,7 +28,7 @@ void BuildNewContent(char *name,int type,double value) {
 	InserContent(newContent);
 }
 //添加四元式
-void InsertNewQuad(int op, void* arg1, void*  arg2, void*  result)
+void InsertNewQuad(int op, int arg1, int  arg2, int result)
 {
 	quadNum->op = op;
 	quadNum->arg1 = arg1;
@@ -44,7 +44,7 @@ void ShowQuadTable()
 {
 	int index = 1;
 	QuadNum* tmp = baseQuad;
-	cout<<"index	" << "op	" << "arg1		" << "arg2		" << "result		" << endl;
+	cout<<"index	" << "op	" << "arg1	" << "arg2	" << "result		" << endl;
 	while (tmp->next != nullptr)
 	{
 		cout << index<<"	";
@@ -78,6 +78,11 @@ void InserContent(Content * content) {
 		break;
 	}
 	ShowChart();
+}
+//添加常量
+void InsertConstNum(Content *content) {
+	content->addr = constTableAdress;
+	constTableAdress += 1;
 }
 //删除标识符
 void DeleteContent() {

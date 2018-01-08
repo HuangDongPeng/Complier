@@ -79,7 +79,8 @@ extern struct QuadNum* baseQuad;
 Content * tmpContent=new Content();
 
 extern void InserContent(Content * content);
-extern void InsertNewQuad(int op, void* arg1, void* arg2, void* result);
+extern void InsertNewQuad(int op, int arg1, int arg2,int result);
+extern void InsertConstNum(Content *content);
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
@@ -96,7 +97,7 @@ extern int yylex();
 using namespace std;
 
 /* Line 371 of yacc.c  */
-#line 100 "parser.tab.cpp"
+#line 101 "parser.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -165,7 +166,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 35 "parser.y"
+#line 36 "parser.y"
 
 	int intVal;
 	double doubleVal;
@@ -182,7 +183,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 186 "parser.tab.cpp"
+#line 187 "parser.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -210,7 +211,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 214 "parser.tab.cpp"
+#line 215 "parser.tab.cpp"
 
 #ifdef short
 # undef short
@@ -508,9 +509,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    74,    74,    75,    76,    77,    90,    92,    93,    94,
-      95,    96,   100,   101,   117,   118,   119,   124,   135,   147,
-     159,   171,   172,   173,   174
+       0,    75,    75,    76,    77,    78,    91,    93,    94,    95,
+      96,    97,   101,   102,   118,   119,   120,   125,   136,   148,
+     160,   172,   173,   174,   175
 };
 #endif
 
@@ -1428,13 +1429,13 @@ yyreduce:
     {
         case 3:
 /* Line 1792 of yacc.c  */
-#line 75 "parser.y"
+#line 76 "parser.y"
     {cout<<(yyvsp[(2) - (3)].booler)<<endl;}
     break;
 
   case 5:
 /* Line 1792 of yacc.c  */
-#line 78 "parser.y"
+#line 79 "parser.y"
     {
 
 										if((yyvsp[(4) - (5)].data).content->type==C){
@@ -1451,43 +1452,43 @@ yyreduce:
 
   case 7:
 /* Line 1792 of yacc.c  */
-#line 92 "parser.y"
+#line 93 "parser.y"
     {float var1=*(float*)(yyvsp[(1) - (3)].data).content->pValue;float var2=*(float*)(yyvsp[(3) - (3)].data).content->pValue;if(var1==var2)(yyval.booler)=true;else{(yyval.booler)=false;}}
     break;
 
   case 8:
 /* Line 1792 of yacc.c  */
-#line 93 "parser.y"
+#line 94 "parser.y"
     {float var1=*(float*)(yyvsp[(1) - (3)].data).content->pValue;float var2=*(float*)(yyvsp[(3) - (3)].data).content->pValue;if(var1<var2)(yyval.booler)=true;else{(yyval.booler)=false;}}
     break;
 
   case 9:
 /* Line 1792 of yacc.c  */
-#line 94 "parser.y"
+#line 95 "parser.y"
     {float var1=*(float*)(yyvsp[(1) - (3)].data).content->pValue;float var2=*(float*)(yyvsp[(3) - (3)].data).content->pValue;if(var1<=var2)(yyval.booler)=true;else{(yyval.booler)=false;}}
     break;
 
   case 10:
 /* Line 1792 of yacc.c  */
-#line 95 "parser.y"
+#line 96 "parser.y"
     {float var1=*(float*)(yyvsp[(1) - (3)].data).content->pValue;float var2=*(float*)(yyvsp[(3) - (3)].data).content->pValue;if(var1>var2)(yyval.booler)=true;else{(yyval.booler)=false;}}
     break;
 
   case 11:
 /* Line 1792 of yacc.c  */
-#line 96 "parser.y"
+#line 97 "parser.y"
     {float var1=*(float*)(yyvsp[(1) - (3)].data).content->pValue;float var2=*(float*)(yyvsp[(3) - (3)].data).content->pValue;if(var1>=var2)(yyval.booler)=true;else{(yyval.booler)=false;}}
     break;
 
   case 12:
 /* Line 1792 of yacc.c  */
-#line 100 "parser.y"
+#line 101 "parser.y"
     {tmpContent->name=(yyvsp[(2) - (2)].strVal);SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
     break;
 
   case 13:
 /* Line 1792 of yacc.c  */
-#line 101 "parser.y"
+#line 102 "parser.y"
     {tmpContent->name=(yyvsp[(2) - (4)].strVal);
 										 if(tmpContent->type==C){
 										 char value=GetValueChar((yyvsp[(4) - (4)].data).content);
@@ -1506,25 +1507,25 @@ yyreduce:
 
   case 14:
 /* Line 1792 of yacc.c  */
-#line 117 "parser.y"
+#line 118 "parser.y"
     {tmpContent->type=Z;}
     break;
 
   case 15:
 /* Line 1792 of yacc.c  */
-#line 118 "parser.y"
+#line 119 "parser.y"
     {tmpContent->type=C;}
     break;
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 119 "parser.y"
+#line 120 "parser.y"
     {tmpContent->type=F;}
     break;
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 124 "parser.y"
+#line 125 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1534,13 +1535,13 @@ yyreduce:
 											type=F; 
 										 }
 										 (yyval.data).content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_ADD, (yyvsp[(1) - (3)].data).content->address,(yyvsp[(3) - (3)].data).content->address,(yyval.data).content->address);
+										 InsertNewQuad(OP_ADD, (yyvsp[(1) - (3)].data).content->addr,(yyvsp[(3) - (3)].data).content->addr,(yyval.data).content->addr);
 										}
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 135 "parser.y"
+#line 136 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1550,14 +1551,14 @@ yyreduce:
 											type=F; 
 										 }
 										 (yyval.data).content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_SUB, (yyvsp[(1) - (3)].data).content->address,(yyvsp[(3) - (3)].data).content->address,(yyval.data).content->address);
+										 InsertNewQuad(OP_SUB, (yyvsp[(1) - (3)].data).content->addr,(yyvsp[(3) - (3)].data).content->addr,(yyval.data).content->addr);
 
 										}
     break;
 
   case 19:
 /* Line 1792 of yacc.c  */
-#line 147 "parser.y"
+#line 148 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1567,14 +1568,14 @@ yyreduce:
 											type=F; 
 										 }
 										 (yyval.data).content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_MUL, (yyvsp[(1) - (3)].data).content->address,(yyvsp[(3) - (3)].data).content->address,(yyval.data).content->address);
+										 InsertNewQuad(OP_MUL, (yyvsp[(1) - (3)].data).content->addr,(yyvsp[(3) - (3)].data).content->addr,(yyval.data).content->addr);
 
 										}
     break;
 
   case 20:
 /* Line 1792 of yacc.c  */
-#line 159 "parser.y"
+#line 160 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1584,37 +1585,37 @@ yyreduce:
 											type=F; 
 										 }
 										 (yyval.data).content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_DIV, (yyvsp[(1) - (3)].data).content->address,(yyvsp[(3) - (3)].data).content->address,(yyval.data).content->address);
+										 InsertNewQuad(OP_DIV, (yyvsp[(1) - (3)].data).content->addr,(yyvsp[(3) - (3)].data).content->addr,(yyval.data).content->addr);
 										}
     break;
 
   case 21:
 /* Line 1792 of yacc.c  */
-#line 171 "parser.y"
-    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].intVal),' ',Z);}
+#line 172 "parser.y"
+    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].intVal),' ',Z);InsertConstNum((yyval.data).content);}
     break;
 
   case 22:
 /* Line 1792 of yacc.c  */
-#line 172 "parser.y"
-    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].doubleVal),' ',F);}
+#line 173 "parser.y"
+    {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].doubleVal),' ',F);InsertConstNum((yyval.data).content);}
     break;
 
   case 23:
 /* Line 1792 of yacc.c  */
-#line 173 "parser.y"
-    {(yyval.data).content=SetValueWithReturn(0,(yyvsp[(1) - (1)].charVal),C);}
+#line 174 "parser.y"
+    {(yyval.data).content=SetValueWithReturn(0,(yyvsp[(1) - (1)].charVal),C);InsertConstNum((yyval.data).content);}
     break;
 
   case 24:
 /* Line 1792 of yacc.c  */
-#line 174 "parser.y"
+#line 175 "parser.y"
     {(yyval.data).content=FindContent((yyvsp[(1) - (1)].strVal));if((yyval.data).content==nullptr)yyerror("undeclare symbol");}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1618 "parser.tab.cpp"
+#line 1619 "parser.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1846,7 +1847,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 178 "parser.y"
+#line 179 "parser.y"
 
 
 void SetValue(double dVar=0,char cVar=' ')

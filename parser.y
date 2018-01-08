@@ -13,7 +13,8 @@ extern struct QuadNum* baseQuad;
 Content * tmpContent=new Content();
 
 extern void InserContent(Content * content);
-extern void InsertNewQuad(int op, void* arg1, void* arg2, void* result);
+extern void InsertNewQuad(int op, int arg1, int arg2,int result);
+extern void InsertConstNum(Content *content);
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
@@ -130,7 +131,7 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_ADD, $1.content->address,$3.content->address,$$.content->address);
+										 InsertNewQuad(OP_ADD, $1.content->addr,$3.content->addr,$$.content->addr);
 										}
 			| expression SUB expression	{
 										 float tmpValue1=GetValue($1.content);
@@ -141,7 +142,7 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_SUB, $1.content->address,$3.content->address,$$.content->address);
+										 InsertNewQuad(OP_SUB, $1.content->addr,$3.content->addr,$$.content->addr);
 
 										}
 			|expression MUL expression	{
@@ -153,7 +154,7 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_MUL, $1.content->address,$3.content->address,$$.content->address);
+										 InsertNewQuad(OP_MUL, $1.content->addr,$3.content->addr,$$.content->addr);
 
 										}
 			|expression DIV expression	{
@@ -165,12 +166,12 @@ expression: expression ADD expression	{
 											type=F; 
 										 }
 										 $$.content=SetValueWithReturn(result,' ',type);
-										 InsertNewQuad(OP_DIV, $1.content->address,$3.content->address,$$.content->address);
+										 InsertNewQuad(OP_DIV, $1.content->addr,$3.content->addr,$$.content->addr);
 										}
 						
-			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);}
-			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);}
-			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);}
+			| INTNUMBER					{$$.content=SetValueWithReturn($1,' ',Z);InsertConstNum($$.content);}
+			| FLOATNUMBER				{$$.content=SetValueWithReturn($1,' ',F);InsertConstNum($$.content);}
+			| CHARACTER					{$$.content=SetValueWithReturn(0,$1,C);InsertConstNum($$.content);}
 			| ID						{$$.content=FindContent($1);if($$.content==nullptr)yyerror("undeclare symbol");}
 			;
 
