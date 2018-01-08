@@ -23,9 +23,6 @@ extern void SetValue(double , char );
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
-void SetValue(double ,char);
-void SetValueAfterDeclare(char* ,double ,char);
-Content* SetValueWithReturn(double,char ,Property );
 
 
 extern int yyerror(char *);

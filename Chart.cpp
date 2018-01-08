@@ -5,6 +5,15 @@ using namespace std;
 
 Content * tmpContent = new Content();
 
+
+struct ConstTable
+{
+	class Content *content;
+	ConstTable* next;
+};
+struct ConstTable* constTable;
+struct ConstTable* baseConstTable;
+
 struct QuadNum
 {
 	int op;
@@ -85,8 +94,50 @@ void InserContent(Content * content) {
 }
 //添加常量
 void InsertConstNum(Content *content) {
+	constTable = (ConstTable*)malloc(sizeof(ConstTable));
+
+	if (baseConstTable == nullptr)
+	{
+		baseConstTable = constTable;
+	}
+
+	constTable->content = content;
 	content->addr = constTableAdress;
 	constTableAdress += 1;
+	constTable = constTable->next;
+}
+//查找常量表
+Content* FindConstContent(Property _type, DataType data)
+{
+	struct ConstTable* tmp = baseConstTable;
+
+	while (tmp != nullptr)
+	{
+		if (tmp->content->type != _type) {
+			tmp = tmp->next;
+			continue;
+		}
+		switch (_type)
+		{
+		case Z:
+			if (tmp->content->data.intVal == data.intVal)
+				return tmp->content;
+			break;
+		case F:
+			if (tmp->content->data.floatVal == data.floatVal)
+				return tmp->content;
+			break;
+		case C:
+			if (tmp->content->data.charVal == data.charVal)
+				return tmp->content;
+			break;
+		case CONST:
+			break;
+		default:
+			break;
+		}
+	}
+	return nullptr;
 }
 //删除标识符
 void DeleteContent() {
@@ -290,10 +341,12 @@ char GetValueChar(Content *content) {
 
 void SetValue(double dVar = 0, char cVar = ' ')
 {
+	Content* tmp;
 	switch (tmpContent->type)
 	{
 	case Z:
-	    tmpContent->data.intVal = dVar;
+		tmp = FindConstContent();
+		tmpContent->data.intVal = dVar;
 		break;
 	case F:
 		tmpContent->data.floatVal = dVar;
