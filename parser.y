@@ -10,11 +10,16 @@ extern struct QuadNum* quadNum;
 extern struct QuadNum* baseQuad;
 
 
-Content * tmpContent=new Content();
+extern Content * tmpContent;
 
 extern void InserContent(Content * content);
 extern void InsertNewQuad(int op, int arg1, int arg2,int result);
 extern void InsertConstNum(Content *content);
+extern float GetValue(Content *content);
+extern char GetValueChar(Content *content);
+extern void SetValueAfterDeclare(char* name, double dVar = 0, char cVar = ' ');
+extern Content* SetValueWithReturn(double , char , Property );
+extern void SetValue(double , char );
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
@@ -176,94 +181,3 @@ expression: expression ADD expression	{
 
 %%
 
-void SetValue(double dVar=0,char cVar=' ')
-{
-
-    float* pTmpValueF;
-	int* pTmpValueI;
-	char *pTmpChar;
-
-	switch (tmpContent->type)
-	{
-	case Z:
-		tmpContent->pValue = malloc(sizeof(int));
-		pTmpValueI = (int*)tmpContent->pValue;
-		*pTmpValueI = dVar;
-		break;
-	case F:
-		tmpContent->pValue = malloc(sizeof(float));
-		pTmpValueF = (float*)tmpContent->pValue;
-		*pTmpValueF = dVar;
-		break;
-	case C:
-		tmpContent->pValue = malloc(sizeof(char));
-		pTmpChar = (char*)tmpContent->pValue;
-		*pTmpChar = cVar;
-		break;
-	default:
-		break;
-	}
-}
-
-Content* SetValueWithReturn(double dVar=0,char cVar=' ',Property _type=Z)
-{
-	Content* tmp = new Content();
-	tmp->type=_type;
-
-    float* pTmpValueF;
-	int* pTmpValueI;
-	char *pTmpChar;
-
-	switch (tmp->type)
-	{
-	case Z:
-		tmp->pValue = malloc(sizeof(int));
-		pTmpValueI = (int*)tmp->pValue;
-		*pTmpValueI = dVar;
-		break;
-	case F:
-		tmp->pValue = malloc(sizeof(float));
-		pTmpValueF = (float*)tmp->pValue;
-		*pTmpValueF = dVar;
-		break;
-	case C:
-		tmp->pValue = malloc(sizeof(char));
-		pTmpChar = (char*)tmp->pValue;
-		*pTmpChar = cVar;
-		break;
-	case CONST:
-		tmp->value=dVar;
-		InsertConstNum(tmp);
-		break;
-	default:
-		break;
-	}
-	return tmp;
-}
-
-
-void SetValueAfterDeclare(char* name,double dVar=0,char cVar=' '){
-	tmpContent=FindContent(name);
-	if(tmpContent==nullptr)
-		yyerror("un declare!");
-	SetValue(dVar,cVar);
-}
-
-float GetValue(Content *content)
-{
-	switch (content->type)
-	{
-	case Z:
-		return *(int*)content->pValue;
-		break;
-	case F:
-		return *(float*)content->pValue;
-	default:
-		break;
-	}
-	return 0;
-}
-
-char GetValueChar(Content *content) {
-	return *(char*)content->pValue;
-}

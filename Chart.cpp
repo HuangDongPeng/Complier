@@ -3,6 +3,8 @@
 #include <iostream>	
 using namespace std;
 
+Content * tmpContent = new Content();
+
 struct QuadNum
 {
 	int op;
@@ -22,11 +24,7 @@ hash_map<int, Content*> levelMap;
 int hashMapSize = HASHLENGTH;
 static int index = 0;
 
-//输入新建标识符
-void BuildNewContent(char *name, int type, double value) {
-	Content *newContent = new Content(name, type, nullptr, value);
-	InserContent(newContent);
-}
+
 //添加四元式
 void InsertNewQuad(int op, int arg1, int  arg2, int result)
 {
@@ -235,15 +233,15 @@ void ShowChart() {
 		cout << String2Char(tmp->name) << "	";
 
 		if (tmp->type == Z) {
-			cout << "Z	" << *(int*)tmp->pValue << "	";
+			cout << "Z	" << tmp->data.intVal << "	";
 		}
 		else if (tmp->type == F)
 		{
-			cout << "F	" << *(float*)tmp->pValue << "	";
+			cout << "F	" << tmp->data.floatVal << "	";
 		}
 		else if (tmp->type == C)
 		{
-			cout << "C	" << *(char*)tmp->pValue << "	";
+			cout << "C	" << tmp->data.charVal << "	";
 		}
 		cout << tmp->addr << "	";
 		if (tmp->link == nullptr)
@@ -269,40 +267,93 @@ void ShowHash() {
 	cout << "———————————————————————————————" << endl;
 
 }
-//操作选择
-//void OperateChoose(int num) {
-//	Content *result;
-//	char* name = new char;
-//
-//
-//	switch (num)
-//	{
-//	case 1:
-//		break;
-//	case 2:
-//		cout << "输入标识符名：" << endl;
-//		cin >> name;
-//		result = FindContent(name);
-//		if (result == nullptr)
-//			cout << "没有这个标识符" << endl;
-//		else
-//		{
-//			ShowDetail(result);
-//		}
-//		break;
-//	case 3:
-//		DeleteContent();
-//		break;
-//	case 4:
-//		ShowChart();
-//		break;
-//	case 5:
-//		ShowHash();
-//		break;
-//	default:
-//		break;
-//	}
-//}
+
+///////辅助函数
+float GetValue(Content *content)
+{
+	switch (content->type)
+	{
+	case Z:
+		return *(int*)content->pValue;
+		break;
+	case F:
+		return *(float*)content->pValue;
+	default:
+		break;
+	}
+	return 0;
+}
+
+char GetValueChar(Content *content) {
+	return *(char*)content->pValue;
+}
+
+void SetValue(double dVar = 0, char cVar = ' ')
+{
+
+	float* pTmpValueF;
+	int* pTmpValueI;
+	char *pTmpChar;
+
+	switch (tmpContent->type)
+	{
+	case Z:
+	    tmpContent->data.intVal = dVar;
+		break;
+	case F:
+		tmpContent->data.floatVal = dVar;
+		break;
+	case C:
+		tmpContent->data.charVal = cVar;
+		break;
+	default:
+		break;
+	}
+}
+
+Content* SetValueWithReturn(double dVar = 0, char cVar = ' ', Property _type = Z)
+{
+	Content* tmp = new Content();
+	tmp->type = _type;
+
+	float* pTmpValueF;
+	int* pTmpValueI;
+	char *pTmpChar;
+
+	switch (tmp->type)
+	{
+	case Z:
+		tmp->pValue = malloc(sizeof(int));
+		pTmpValueI = (int*)tmp->pValue;
+		*pTmpValueI = dVar;
+		break;
+	case F:
+		tmp->pValue = malloc(sizeof(float));
+		pTmpValueF = (float*)tmp->pValue;
+		*pTmpValueF = dVar;
+		break;
+	case C:
+		tmp->pValue = malloc(sizeof(char));
+		pTmpChar = (char*)tmp->pValue;
+		*pTmpChar = cVar;
+		break;
+	case CONST:
+		tmp->value = dVar;
+		InsertConstNum(tmp);
+		break;
+	default:
+		break;
+	}
+	return tmp;
+}
+
+void SetValueAfterDeclare(char* name, double dVar = 0, char cVar = ' ') {
+	tmpContent = FindContent(name);
+	if (tmpContent == nullptr)
+		return;
+	SetValue(dVar, cVar);
+}
+
 
 Content::Content()
 {

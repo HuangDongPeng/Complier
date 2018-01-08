@@ -76,11 +76,16 @@ extern struct QuadNum* quadNum;
 extern struct QuadNum* baseQuad;
 
 
-Content * tmpContent=new Content();
+extern Content * tmpContent;
 
 extern void InserContent(Content * content);
 extern void InsertNewQuad(int op, int arg1, int arg2,int result);
 extern void InsertConstNum(Content *content);
+extern float GetValue(Content *content);
+extern char GetValueChar(Content *content);
+extern void SetValueAfterDeclare(char* name, double dVar = 0, char cVar = ' ');
+extern Content* SetValueWithReturn(double , char , Property );
+extern void SetValue(double , char );
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
@@ -97,7 +102,7 @@ extern int yylex();
 using namespace std;
 
 /* Line 371 of yacc.c  */
-#line 101 "parser.tab.cpp"
+#line 106 "parser.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -166,7 +171,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 36 "parser.y"
+#line 41 "parser.y"
 
 	int intVal;
 	double doubleVal;
@@ -183,7 +188,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 187 "parser.tab.cpp"
+#line 192 "parser.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -211,7 +216,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 215 "parser.tab.cpp"
+#line 220 "parser.tab.cpp"
 
 #ifdef short
 # undef short
@@ -506,8 +511,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    74,    74,    75,    76,    90,    94,   100,   116,   117,
-     118,   123,   134,   146,   158,   170,   171,   172,   173
+       0,    79,    79,    80,    81,    95,    99,   105,   121,   122,
+     123,   128,   139,   151,   163,   175,   176,   177,   178
 };
 #endif
 
@@ -1415,7 +1420,7 @@ yyreduce:
     {
         case 4:
 /* Line 1792 of yacc.c  */
-#line 77 "parser.y"
+#line 82 "parser.y"
     {
 										if((yyvsp[(4) - (5)].data).content->type==C){
 										char value=GetValueChar((yyvsp[(4) - (5)].data).content);
@@ -1433,7 +1438,7 @@ yyreduce:
 
   case 6:
 /* Line 1792 of yacc.c  */
-#line 94 "parser.y"
+#line 99 "parser.y"
     {tmpContent->name=(yyvsp[(2) - (2)].strVal);
 										 SetValue(0,' ');
 										 InserContent(tmpContent);
@@ -1444,7 +1449,7 @@ yyreduce:
 
   case 7:
 /* Line 1792 of yacc.c  */
-#line 100 "parser.y"
+#line 105 "parser.y"
     {tmpContent->name=(yyvsp[(2) - (4)].strVal);
 										 if(tmpContent->type==C){
 										 char value=GetValueChar((yyvsp[(4) - (4)].data).content);
@@ -1463,25 +1468,25 @@ yyreduce:
 
   case 8:
 /* Line 1792 of yacc.c  */
-#line 116 "parser.y"
+#line 121 "parser.y"
     {tmpContent->type=Z;}
     break;
 
   case 9:
 /* Line 1792 of yacc.c  */
-#line 117 "parser.y"
+#line 122 "parser.y"
     {tmpContent->type=C;}
     break;
 
   case 10:
 /* Line 1792 of yacc.c  */
-#line 118 "parser.y"
+#line 123 "parser.y"
     {tmpContent->type=F;}
     break;
 
   case 11:
 /* Line 1792 of yacc.c  */
-#line 123 "parser.y"
+#line 128 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1497,7 +1502,7 @@ yyreduce:
 
   case 12:
 /* Line 1792 of yacc.c  */
-#line 134 "parser.y"
+#line 139 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1514,7 +1519,7 @@ yyreduce:
 
   case 13:
 /* Line 1792 of yacc.c  */
-#line 146 "parser.y"
+#line 151 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1531,7 +1536,7 @@ yyreduce:
 
   case 14:
 /* Line 1792 of yacc.c  */
-#line 158 "parser.y"
+#line 163 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1547,31 +1552,31 @@ yyreduce:
 
   case 15:
 /* Line 1792 of yacc.c  */
-#line 170 "parser.y"
+#line 175 "parser.y"
     {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].intVal),' ',Z);InsertConstNum((yyval.data).content);}
     break;
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 171 "parser.y"
+#line 176 "parser.y"
     {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].doubleVal),' ',F);InsertConstNum((yyval.data).content);}
     break;
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 172 "parser.y"
+#line 177 "parser.y"
     {(yyval.data).content=SetValueWithReturn(0,(yyvsp[(1) - (1)].charVal),C);InsertConstNum((yyval.data).content);}
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 173 "parser.y"
+#line 178 "parser.y"
     {(yyval.data).content=FindContent((yyvsp[(1) - (1)].strVal));if((yyval.data).content==nullptr)yyerror("undeclare symbol");}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1575 "parser.tab.cpp"
+#line 1580 "parser.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1803,97 +1808,6 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 177 "parser.y"
+#line 182 "parser.y"
 
 
-void SetValue(double dVar=0,char cVar=' ')
-{
-
-    float* pTmpValueF;
-	int* pTmpValueI;
-	char *pTmpChar;
-
-	switch (tmpContent->type)
-	{
-	case Z:
-		tmpContent->pValue = malloc(sizeof(int));
-		pTmpValueI = (int*)tmpContent->pValue;
-		*pTmpValueI = dVar;
-		break;
-	case F:
-		tmpContent->pValue = malloc(sizeof(float));
-		pTmpValueF = (float*)tmpContent->pValue;
-		*pTmpValueF = dVar;
-		break;
-	case C:
-		tmpContent->pValue = malloc(sizeof(char));
-		pTmpChar = (char*)tmpContent->pValue;
-		*pTmpChar = cVar;
-		break;
-	default:
-		break;
-	}
-}
-
-Content* SetValueWithReturn(double dVar=0,char cVar=' ',Property _type=Z)
-{
-	Content* tmp = new Content();
-	tmp->type=_type;
-
-    float* pTmpValueF;
-	int* pTmpValueI;
-	char *pTmpChar;
-
-	switch (tmp->type)
-	{
-	case Z:
-		tmp->pValue = malloc(sizeof(int));
-		pTmpValueI = (int*)tmp->pValue;
-		*pTmpValueI = dVar;
-		break;
-	case F:
-		tmp->pValue = malloc(sizeof(float));
-		pTmpValueF = (float*)tmp->pValue;
-		*pTmpValueF = dVar;
-		break;
-	case C:
-		tmp->pValue = malloc(sizeof(char));
-		pTmpChar = (char*)tmp->pValue;
-		*pTmpChar = cVar;
-		break;
-	case CONST:
-		tmp->value=dVar;
-		InsertConstNum(tmp);
-		break;
-	default:
-		break;
-	}
-	return tmp;
-}
-
-
-void SetValueAfterDeclare(char* name,double dVar=0,char cVar=' '){
-	tmpContent=FindContent(name);
-	if(tmpContent==nullptr)
-		yyerror("un declare!");
-	SetValue(dVar,cVar);
-}
-
-float GetValue(Content *content)
-{
-	switch (content->type)
-	{
-	case Z:
-		return *(int*)content->pValue;
-		break;
-	case F:
-		return *(float*)content->pValue;
-	default:
-		break;
-	}
-	return 0;
-}
-
-char GetValueChar(Content *content) {
-	return *(char*)content->pValue;
-}

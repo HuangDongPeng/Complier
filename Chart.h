@@ -46,62 +46,16 @@ public:
 
 	int addr;
 	int width=4;
-
-
-	void * address = (void*)this;
+	DataType data;
 	void * pValue = nullptr;
 	float value=0;
 
 	Content();
-	Content(char* _name, int _type, Content* _link , float _value);
 	~Content();
-
-
 private:
 
 };
 
-inline Content::Content(char * _name, int _type, Content * _link, float _value)
-{
-	float* pTmpValueF;
-	int* pTmpValueI;
-	char *pTmpChar;
-
-	name = _name;
-	switch (_type)
-	{
-	case 1:
-		type = Z;
-		pValue = malloc(sizeof(int));
-		pTmpValueI = (int*)pValue;
-		*pTmpValueI = _value;
-		width = 4;
-		break;
-	case 2:
-		type = F;
-		pValue = malloc(sizeof(float));
-		pTmpValueF = (float*)pValue;
-		*pTmpValueF = _value;
-		width = 8;
-
-		break;
-	case 3:
-		type = C;
-		pValue = malloc(sizeof(char));
-		pTmpChar = (char*)pValue;
-		*pTmpChar = _value;
-		width = 1;
-		break;
-	case 4:
-		type = CONST;
-		value = _value;
-		width = 1;
-		break;
-	default:
-		break;
-	}
-	link = _link;
-}
 
 void InsertConstNum(Content *content);
 
@@ -117,7 +71,6 @@ void DeleteContent_HashMap(Content *target);
 
 void ShowDetail(Content * content);
 
-void BuildNewContent(char *name, int type, double value);
 
 void ShowChart();
 
