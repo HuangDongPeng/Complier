@@ -4,6 +4,7 @@
 extern int yyparse();
 
 void main() {
+	
 	yyparse();
 	getchar();
 }

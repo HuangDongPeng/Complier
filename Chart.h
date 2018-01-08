@@ -4,7 +4,10 @@
 #define CHART_H
 #include <stack>
 #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
+
 #define HASHLENGTH 13
+#define BEGIN_ADRESS 2000
+
 #include <hash_map>
 #include <unordered_map>
 
@@ -25,7 +28,7 @@ union DataType
 };
 /////////////////////////////ËÄÔªÊý////////////
 
-
+static int symTableAddress=BEGIN_ADRESS;
 
 void ShowQuadTable();
 
@@ -35,6 +38,10 @@ public:
 	string name;
 	Property type = Z;
 	Content* link = nullptr;
+
+	int addr;
+	int width=4;
+
 
 	void * address = (void*)this;
 	void * pValue = nullptr;
@@ -63,18 +70,23 @@ inline Content::Content(char * _name, int _type, Content * _link, float _value)
 		pValue = malloc(sizeof(int));
 		pTmpValueI = (int*)pValue;
 		*pTmpValueI = _value;
+		width = 4;
 		break;
 	case 2:
 		type = F;
 		pValue = malloc(sizeof(float));
 		pTmpValueF = (float*)pValue;
 		*pTmpValueF = _value;
+		width = 8;
+
 		break;
 	case 3:
 		type = C;
 		pValue = malloc(sizeof(char));
 		pTmpChar = (char*)pValue;
 		*pTmpChar = _value;
+		width = 1;
+
 		break;
 	default:
 		break;
@@ -107,8 +119,6 @@ void ChartInsert(char * name, int type);
 
 
 Content * FindContent(string name);
-
-
 
 
 #endif // !CHAR_H

@@ -27,7 +27,7 @@ void BuildNewContent(char *name,int type,double value) {
 	Content *newContent = new Content(name, type, nullptr, value);
 	InserContent(newContent);
 }
-
+//添加四元式
 void InsertNewQuad(int op, void* arg1, void*  arg2, void*  result)
 {
 	quadNum->op = op;
@@ -39,6 +39,7 @@ void InsertNewQuad(int op, void* arg1, void*  arg2, void*  result)
 	quadNum->next = nullptr;
 	ShowQuadTable();
 }
+//显示四元式
 void ShowQuadTable()
 {
 	int index = 1;
@@ -59,6 +60,23 @@ void ShowQuadTable()
 void InserContent(Content * content) {
 	s.push(content);
 	InsertContent_HashMap(content);
+	switch (content->type)
+	{
+	case Z:
+		content->addr = symTableAddress;
+		symTableAddress += 4;
+		break;
+	case F:
+		content->addr = symTableAddress;
+		symTableAddress += 8;
+		break;
+	case C:
+		content->addr = symTableAddress;
+		symTableAddress += 1;
+		break;
+	default:
+		break;
+	}
 	ShowChart();
 }
 //删除标识符
@@ -216,7 +234,7 @@ void ShowChart() {
 		{
 			cout << "C	" <<*(char*)tmp->pValue << "	";
 		}
-		cout << tmp->address << "	";
+		cout << tmp->addr << "	";
 		if (tmp->link == nullptr)
 			cout << "null	" << endl;
 		else

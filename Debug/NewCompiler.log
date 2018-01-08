@@ -1,7 +1,21 @@
-﻿  Process "parser.y" bison file
+﻿  main.cpp
+  Chart.cpp
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(72): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(87): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.cpp(27): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.cpp(97): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(136): note: 参见“strcpy”的声明
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.cpp(146): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(136): note: 参见“strcpy”的声明
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.cpp(158): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(136): note: 参见“strcpy”的声明
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.cpp(164): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(136): note: 参见“strcpy”的声明
+  正在生成代码...
+  正在编译...
   parser.tab.cpp
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(65): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(77): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(72): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(87): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
 c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1146): warning C4065: switch 语句包含“default”但是未包含“case”标签
 c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(192): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
 c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(197): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
@@ -9,10 +23,5 @@ c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler
 c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(228): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
 c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(254): warning C4244: “return”: 从“int”转换到“float”，可能丢失数据
   正在生成代码...
-  正在编译...
-  main.cpp
-  正在生成代码...
-  正在跳过...(未检测到相关更改)
-  scanner.flex.cpp
   NewCompiler.vcxproj -> C:\Users\Dangerous\documents\visual studio 2017\Projects\NewCompiler\Debug\NewCompiler.exe
   NewCompiler.vcxproj -> C:\Users\Dangerous\documents\visual studio 2017\Projects\NewCompiler\Debug\NewCompiler.pdb (Partial PDB)

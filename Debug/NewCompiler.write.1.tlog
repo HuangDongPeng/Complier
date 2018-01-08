@@ -818,3 +818,7 @@ C:\Users\Dangerous\documents\visual studio 2017\Projects\NewCompiler\NewCompiler
 C:\Users\Dangerous\documents\visual studio 2017\Projects\NewCompiler\NewCompiler\parser.tab.cpp
 ^parser.y
 C:\Users\Dangerous\documents\visual studio 2017\Projects\NewCompiler\NewCompiler\parser.tab.cpp
+^parser.y
+C:\Users\Dangerous\Documents\Visual Studio 2017\Projects\NewCompiler\NewCompiler\parser.tab.cpp
+^scanner.l
+C:\Users\Dangerous\Documents\Visual Studio 2017\Projects\NewCompiler\NewCompiler\scanner.flex.cpp
