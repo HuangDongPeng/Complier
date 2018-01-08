@@ -8,8 +8,8 @@ Content * tmpContent = new Content();
 
 struct ConstTable
 {
-	class Content *content;
-	ConstTable* next;
+	class Content *content = nullptr;
+	ConstTable* next = nullptr;
 };
 struct ConstTable* constTable;
 struct ConstTable* baseConstTable;
@@ -94,6 +94,10 @@ void InserContent(Content * content) {
 }
 //添加常量
 void InsertConstNum(Content *content) {
+	Content *tmp = FindConstContent(content->type, content->data);
+	if (tmp != nullptr)
+		return;
+
 	constTable = (ConstTable*)malloc(sizeof(ConstTable));
 
 	if (baseConstTable == nullptr)
@@ -101,41 +105,52 @@ void InsertConstNum(Content *content) {
 		baseConstTable = constTable;
 	}
 
+
 	constTable->content = content;
 	content->addr = constTableAdress;
 	constTableAdress += 1;
+	constTable->next = (ConstTable*)malloc(sizeof(ConstTable));
 	constTable = constTable->next;
+	constTable->content = nullptr;
+
 }
 //查找常量表
 Content* FindConstContent(Property _type, DataType data)
 {
 	struct ConstTable* tmp = baseConstTable;
-
 	while (tmp != nullptr)
 	{
 		if (tmp->content->type != _type) {
 			tmp = tmp->next;
 			continue;
 		}
-		switch (_type)
+		else
 		{
-		case Z:
-			if (tmp->content->data.intVal == data.intVal)
-				return tmp->content;
-			break;
-		case F:
-			if (tmp->content->data.floatVal == data.floatVal)
-				return tmp->content;
-			break;
-		case C:
-			if (tmp->content->data.charVal == data.charVal)
-				return tmp->content;
-			break;
-		case CONST:
-			break;
-		default:
-			break;
+			switch (_type)
+			{
+			case Z:
+				if (tmp->content->data.intVal == data.intVal)
+					return tmp->content;
+				break;
+			case F:
+				if (tmp->content->data.floatVal == data.floatVal)
+					return tmp->content;
+				break;
+			case C:
+				if (tmp->content->data.charVal == data.charVal)
+					return tmp->content;
+				break;
+			case CONST:
+				break;
+			default:
+				break;
+			}
+			tmp = tmp->next;
+			if (tmp->content == nullptr)
+				break;
 		}
+
+
 	}
 	return nullptr;
 }
@@ -345,7 +360,6 @@ void SetValue(double dVar = 0, char cVar = ' ')
 	switch (tmpContent->type)
 	{
 	case Z:
-		tmp = FindConstContent();
 		tmpContent->data.intVal = dVar;
 		break;
 	case F:
@@ -362,27 +376,44 @@ void SetValue(double dVar = 0, char cVar = ' ')
 Content* SetValueWithReturn(double dVar = 0, char cVar = ' ', Property _type = Z)
 {
 	Content* tmp = new Content();
+	Content* tmpFind;
 	tmp->type = _type;
-
+	DataType data;
 
 	switch (tmp->type)
 	{
 	case Z:
+		data.intVal = dVar;
+		tmpFind = FindConstContent(tmp->type, data);
+		if (tmpFind != nullptr)
+			return tmpFind;
 		tmp->data.intVal = dVar;
 		break;
 	case F:
+		data.floatVal = dVar;
+		tmpFind = FindConstContent(tmp->type, data);
+		if (tmpFind != nullptr)
+			return tmpFind;
 		tmp->data.floatVal = dVar;
 		break;
 	case C:
+		data.charVal = cVar;
+		tmpFind = FindConstContent(tmp->type, data);
+		if (tmpFind != nullptr)
+			return tmpFind;
 		tmp->data.charVal = cVar;
 		break;
 	case CONST:
+		cout << "CONST set value with return" << endl;
+
 		tmp->value = dVar;
 		InsertConstNum(tmp);
 		break;
 	default:
 		break;
 	}
+	cout << "set value with return" << endl;
+
 	return tmp;
 }
 

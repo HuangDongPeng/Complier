@@ -81,7 +81,7 @@ void chartSet();
 
 void ChartInsert(char * name, int type);
 
-
+Content* FindConstContent(Property _type, DataType data);
 Content * FindContent(string name);
 
 
