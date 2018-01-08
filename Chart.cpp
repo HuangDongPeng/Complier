@@ -274,10 +274,10 @@ float GetValue(Content *content)
 	switch (content->type)
 	{
 	case Z:
-		return *(int*)content->pValue;
+		return (content->data.intVal);
 		break;
 	case F:
-		return *(float*)content->pValue;
+		return (content->data.floatVal);
 	default:
 		break;
 	}
@@ -285,16 +285,11 @@ float GetValue(Content *content)
 }
 
 char GetValueChar(Content *content) {
-	return *(char*)content->pValue;
+	return (content->data.charVal);
 }
 
 void SetValue(double dVar = 0, char cVar = ' ')
 {
-
-	float* pTmpValueF;
-	int* pTmpValueI;
-	char *pTmpChar;
-
 	switch (tmpContent->type)
 	{
 	case Z:
@@ -316,26 +311,17 @@ Content* SetValueWithReturn(double dVar = 0, char cVar = ' ', Property _type = Z
 	Content* tmp = new Content();
 	tmp->type = _type;
 
-	float* pTmpValueF;
-	int* pTmpValueI;
-	char *pTmpChar;
 
 	switch (tmp->type)
 	{
 	case Z:
-		tmp->pValue = malloc(sizeof(int));
-		pTmpValueI = (int*)tmp->pValue;
-		*pTmpValueI = dVar;
+		tmp->data.intVal = dVar;
 		break;
 	case F:
-		tmp->pValue = malloc(sizeof(float));
-		pTmpValueF = (float*)tmp->pValue;
-		*pTmpValueF = dVar;
+		tmp->data.floatVal = dVar;
 		break;
 	case C:
-		tmp->pValue = malloc(sizeof(char));
-		pTmpChar = (char*)tmp->pValue;
-		*pTmpChar = cVar;
+		tmp->data.charVal = cVar;
 		break;
 	case CONST:
 		tmp->value = dVar;
