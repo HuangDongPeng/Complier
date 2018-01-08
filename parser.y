@@ -68,16 +68,13 @@ using namespace std;
 
 
 %type <data>expression
-%type <booler>bool
 
 %%
 
 sentence:sentence expression NEWLINE
-		|sentence bool NEWLINE			{cout<<$2<<endl;}
 		|sentence declare NEWLINE
 		|sentence ID ASSIGN expression NEWLINE
 										{
-
 										if($4.content->type==C){
 										char value=GetValueChar($4.content);
 										SetValueAfterDeclare($2,0,value);
@@ -86,31 +83,32 @@ sentence:sentence expression NEWLINE
 										float value=GetValue($4.content);
 										SetValueAfterDeclare($2,value,' ');
 										}
+										 tmpContent=FindContent($2);
+										 InsertNewQuad(OP_ASSIGN,$4.content->addr,USELESS_ARG,tmpContent->addr);
 										 tmpContent=new Content();
 										}
 		|
 		;				
-bool: expression EQ expression			{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1==var2)$$=true;else{$$=false;}}
-	| expression LESS expression		{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1<var2)$$=true;else{$$=false;}}
-	| expression LE expression			{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1<=var2)$$=true;else{$$=false;}}
-	| expression GREAT expression		{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1>var2)$$=true;else{$$=false;}}
-	| expression GE expression			{float var1=*(float*)$1.content->pValue;float var2=*(float*)$3.content->pValue;if(var1>=var2)$$=true;else{$$=false;}}
 
-	;
 
-declare: dataType ID					{tmpContent->name=$2;SetValue(0,' ');InserContent(tmpContent);tmpContent=new Content();}
+declare: dataType ID					{tmpContent->name=$2;
+										 SetValue(0,' ');
+										 InserContent(tmpContent);
+										 InsertNewQuad(OP_DECLARE,-1,-1,tmpContent->addr);
+										 tmpContent=new Content();
+										 }
 		|dataType ID ASSIGN expression  {tmpContent->name=$2;
 										 if(tmpContent->type==C){
 										 char value=GetValueChar($4.content);
 										 SetValue(0,value);
 										 }
 										 else{
-										 cout<<"address is: "<<$4.content->address<<endl;
-
 										 float value=GetValue($4.content);
 										 SetValue(value,' ');
 										 }
 										 InserContent(tmpContent);
+										 tmpContent=FindContent($2);
+										 InsertNewQuad( OP_ASSIGN,$4.content->addr ,USELESS_ARG ,tmpContent->addr);
 										 tmpContent=new Content();
 										 }
 		;
@@ -130,7 +128,7 @@ expression: expression ADD expression	{
 										 if($1.content->type==F||$3.content->type==F){
 											type=F; 
 										 }
-										 $$.content=SetValueWithReturn(result,' ',type);
+										 $$.content=SetValueWithReturn(result,' ',CONST);
 										 InsertNewQuad(OP_ADD, $1.content->addr,$3.content->addr,$$.content->addr);
 										}
 			| expression SUB expression	{
@@ -141,7 +139,7 @@ expression: expression ADD expression	{
 										 if($1.content->type==F||$3.content->type==F){
 											type=F; 
 										 }
-										 $$.content=SetValueWithReturn(result,' ',type);
+										 $$.content=SetValueWithReturn(result,' ',CONST);
 										 InsertNewQuad(OP_SUB, $1.content->addr,$3.content->addr,$$.content->addr);
 
 										}
@@ -153,7 +151,7 @@ expression: expression ADD expression	{
 										 if($1.content->type==F||$3.content->type==F){
 											type=F; 
 										 }
-										 $$.content=SetValueWithReturn(result,' ',type);
+										 $$.content=SetValueWithReturn(result,' ',CONST);
 										 InsertNewQuad(OP_MUL, $1.content->addr,$3.content->addr,$$.content->addr);
 
 										}
@@ -165,7 +163,7 @@ expression: expression ADD expression	{
 										 if($1.content->type==F||$3.content->type==F){
 											type=F; 
 										 }
-										 $$.content=SetValueWithReturn(result,' ',type);
+										 $$.content=SetValueWithReturn(result,' ',CONST);
 										 InsertNewQuad(OP_DIV, $1.content->addr,$3.content->addr,$$.content->addr);
 										}
 						
@@ -232,6 +230,10 @@ Content* SetValueWithReturn(double dVar=0,char cVar=' ',Property _type=Z)
 		tmp->pValue = malloc(sizeof(char));
 		pTmpChar = (char*)tmp->pValue;
 		*pTmpChar = cVar;
+		break;
+	case CONST:
+		tmp->value=dVar;
+		InsertConstNum(tmp);
 		break;
 	default:
 		break;

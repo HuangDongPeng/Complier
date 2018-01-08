@@ -1,13 +1,14 @@
 ﻿  Process "parser.y" bison file
   parser.tab.cpp
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(75): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(90): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1147): warning C4065: switch 语句包含“default”但是未包含“case”标签
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(193): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(198): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(224): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(229): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(255): warning C4244: “return”: 从“int”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(77): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\chart.h(92): warning C4244: “=”: 从“float”转换到“char”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.tab.cpp(1133): warning C4065: switch 语句包含“default”但是未包含“case”标签
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(191): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(196): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(222): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(227): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(235): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\dangerous\documents\visual studio 2017\projects\newcompiler\newcompiler\parser.y(257): warning C4244: “return”: 从“int”转换到“float”，可能丢失数据
   正在生成代码...
   正在编译...
   main.cpp

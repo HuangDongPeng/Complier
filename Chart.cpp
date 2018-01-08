@@ -16,14 +16,14 @@ QuadNum* baseQuad = quadNum;
 
 
 stack<Content*> s;
-hash_map<int, Content*> hashMap;  
+hash_map<int, Content*> hashMap;
 hash_map<int, Content*> blockMap;
 hash_map<int, Content*> levelMap;
 int hashMapSize = HASHLENGTH;
 static int index = 0;
 
 //输入新建标识符
-void BuildNewContent(char *name,int type,double value) {
+void BuildNewContent(char *name, int type, double value) {
 	Content *newContent = new Content(name, type, nullptr, value);
 	InserContent(newContent);
 }
@@ -32,7 +32,7 @@ void InsertNewQuad(int op, int arg1, int  arg2, int result)
 {
 	quadNum->op = op;
 	quadNum->arg1 = arg1;
-	quadNum->arg2 =arg2;
+	quadNum->arg2 = arg2;
 	quadNum->result = result;
 	quadNum->next = (QuadNum*)malloc(sizeof(QuadNum));
 	quadNum = quadNum->next;
@@ -44,13 +44,19 @@ void ShowQuadTable()
 {
 	int index = 1;
 	QuadNum* tmp = baseQuad;
-	cout<<"index	" << "op	" << "arg1	" << "arg2	" << "result		" << endl;
+	cout << "index	" << "op	" << "arg1	" << "arg2	" << "result		" << endl;
 	while (tmp->next != nullptr)
 	{
-		cout << index<<"	";
+		cout << index << "	";
 		cout << tmp->op << "	";
-		cout << tmp->arg1 <<"	";
-		cout << tmp->arg2 << "	";
+		if (tmp->arg1 == USELESS_ARG)
+			cout << "	";
+		else
+			cout << tmp->arg1 << "	";
+		if (tmp->arg2 == USELESS_ARG)
+			cout << "	";
+		else
+			cout << tmp->arg2 << "	";
 		cout << tmp->result << "	" << endl;
 		tmp = tmp->next;
 		index++;
@@ -229,7 +235,7 @@ void ShowChart() {
 		cout << String2Char(tmp->name) << "	";
 
 		if (tmp->type == Z) {
-			cout << "Z	" << *(int*)tmp->pValue<< "	";
+			cout << "Z	" << *(int*)tmp->pValue << "	";
 		}
 		else if (tmp->type == F)
 		{
@@ -237,7 +243,7 @@ void ShowChart() {
 		}
 		else if (tmp->type == C)
 		{
-			cout << "C	" <<*(char*)tmp->pValue << "	";
+			cout << "C	" << *(char*)tmp->pValue << "	";
 		}
 		cout << tmp->addr << "	";
 		if (tmp->link == nullptr)

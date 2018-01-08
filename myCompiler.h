@@ -6,5 +6,7 @@
 #define OP_MUL 10003
 #define OP_DIV 10004
 #define OP_EQ  10005
+#define OP_ASSIGN 10006
+#define OP_DECLARE 10007
 
 

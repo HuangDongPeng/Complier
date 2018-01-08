@@ -8,6 +8,7 @@
 #define HASHLENGTH 13
 #define SYMTABLE_BEGIN_ADRESS 2000
 #define CONST_BEGIN_ADDRESS 5000
+#define USELESS_ARG -1
 
 #include <hash_map>
 #include <unordered_map>
@@ -32,6 +33,7 @@ union DataType
 
 static int symTableAddress= SYMTABLE_BEGIN_ADRESS;
 static int constTableAdress = CONST_BEGIN_ADDRESS;
+
 
 void ShowQuadTable();
 
