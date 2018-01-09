@@ -16,6 +16,7 @@ struct ConstTable* baseConstTable;
 
 struct QuadNum
 {
+	char* label=nullptr;
 	int op;
 	int arg1;
 	int arg2;
@@ -451,7 +452,56 @@ bool CompareData(Content* a,Content* b) {
 	return false;
 }
 
+bool GreatData(Content *a, Content *b) {
+	if (a->type == b->type) {
+		switch (a->type)
+		{
+		case Z:
+			if (a->data.intVal > b->data.intVal)
+				return true;
+			break;
+		case C:
+			break;
+		case F:
+			if (a->data.floatVal > b->data.floatVal)
+				return true;
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return false;
+}
 
+bool LessData(Content *a, Content * b) {
+	if (a->type == b->type) {
+		switch (a->type)
+		{
+		case Z:
+			if (a->data.intVal < b->data.intVal)
+				return true;
+			break;
+		case C:
+			break;
+		case F:
+			if (a->data.floatVal < b->data.floatVal)
+				return true;
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return false;
+
+}
 Content::Content()
 {
 }

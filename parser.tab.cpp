@@ -87,6 +87,9 @@ extern void SetValueAfterDeclare(char* name, double dVar = 0, char cVar = ' ');
 extern Content* SetValueWithReturn(double , char , Property );
 extern void SetValue(double , char );
 extern bool CompareData(Content* a,Content* b);
+extern bool LessData(Content *a, Content * b);
+extern bool GreatData(Content *a, Content * b);
+
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
@@ -100,7 +103,7 @@ extern int yylex();
 using namespace std;
 
 /* Line 371 of yacc.c  */
-#line 104 "parser.tab.cpp"
+#line 107 "parser.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -160,7 +163,8 @@ extern int yydebug;
      IF = 279,
      ELSE = 280,
      WHILE = 281,
-     NEWLINE = 282
+     IFNOELSE = 282,
+     NEWLINE = 283
    };
 #endif
 
@@ -169,7 +173,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 39 "parser.y"
+#line 42 "parser.y"
 
 	int intVal;
 	double doubleVal;
@@ -187,7 +191,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 191 "parser.tab.cpp"
+#line 195 "parser.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -215,7 +219,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 219 "parser.tab.cpp"
+#line 223 "parser.tab.cpp"
 
 #ifdef short
 # undef short
@@ -435,20 +439,20 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   49
+#define YYLAST   75
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  30
+#define YYNTOKENS  33
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  20
+#define YYNRULES  26
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  38
+#define YYNSTATES  56
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   282
+#define YYMAXUTOK   283
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -468,7 +472,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,    31,     2,    32,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -484,7 +488,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    29
+      25,    26,    29,    30
 };
 
 #if YYDEBUG
@@ -492,29 +496,33 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     7,    11,    17,    24,    25,    29,    32,
-      37,    39,    41,    43,    47,    51,    55,    59,    61,    63,
-      65
+       0,     0,     3,     7,    11,    17,    24,    38,    39,    43,
+      47,    51,    55,    59,    63,    66,    71,    73,    75,    77,
+      81,    85,    89,    93,    95,    97,    99
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      31,     0,    -1,    31,    35,    29,    -1,    31,    33,    29,
-      -1,    31,     3,    14,    35,    29,    -1,    31,    24,    27,
-      32,    28,    29,    -1,    -1,    35,    22,    35,    -1,    34,
-       3,    -1,    34,     3,    14,    35,    -1,     7,    -1,     9,
-      -1,     8,    -1,    35,    10,    35,    -1,    35,    11,    35,
-      -1,    35,    12,    35,    -1,    35,    13,    35,    -1,     4,
-      -1,     5,    -1,     6,    -1,     3,    -1
+      34,     0,    -1,    34,    38,    30,    -1,    34,    36,    30,
+      -1,    34,     3,    14,    38,    30,    -1,    34,    24,    27,
+      35,    28,    30,    -1,    34,    24,    27,    35,    28,    31,
+      38,    32,    25,    31,    38,    32,    30,    -1,    -1,    38,
+      22,    38,    -1,    38,    21,    38,    -1,    38,    20,    38,
+      -1,    38,    18,    38,    -1,    38,    19,    38,    -1,    38,
+      23,    38,    -1,    37,     3,    -1,    37,     3,    14,    38,
+      -1,     7,    -1,     9,    -1,     8,    -1,    38,    10,    38,
+      -1,    38,    11,    38,    -1,    38,    12,    38,    -1,    38,
+      13,    38,    -1,     4,    -1,     5,    -1,     6,    -1,     3,
+      -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    79,    79,    80,    81,    95,    96,    99,   102,   108,
-     124,   125,   126,   131,   142,   154,   166,   178,   179,   180,
-     181
+       0,    83,    83,    84,    85,    99,   100,   101,   104,   105,
+     106,   107,   108,   109,   113,   119,   135,   136,   137,   142,
+     153,   165,   177,   189,   190,   191,   192
 };
 #endif
 
@@ -526,8 +534,8 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "ID", "INTNUMBER", "FLOATNUMBER",
   "CHARACTER", "INT", "FLOAT", "CHAR", "ADD", "SUB", "MUL", "DIV",
   "ASSIGN", "OR", "AND", "NOT", "LESS", "LE", "GREAT", "GE", "EQ", "NQ",
-  "IF", "ELSE", "WHILE", "'('", "')'", "NEWLINE", "$accept", "sentence",
-  "boolexpr", "declare", "dataType", "expression", YY_NULL
+  "IF", "ELSE", "WHILE", "'('", "')'", "IFNOELSE", "NEWLINE", "'{'", "'}'",
+  "$accept", "sentence", "boolexpr", "declare", "dataType", "expression", YY_NULL
 };
 #endif
 
@@ -538,24 +546,25 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,    40,    41,   282
+     275,   276,   277,   278,   279,   280,   281,    40,    41,   282,
+     283,   123,   125
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    30,    31,    31,    31,    31,    31,    32,    33,    33,
-      34,    34,    34,    35,    35,    35,    35,    35,    35,    35,
-      35
+       0,    33,    34,    34,    34,    34,    34,    34,    35,    35,
+      35,    35,    35,    35,    36,    36,    37,    37,    37,    38,
+      38,    38,    38,    38,    38,    38,    38
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     3,     3,     5,     6,     0,     3,     2,     4,
-       1,     1,     1,     3,     3,     3,     3,     1,     1,     1,
-       1
+       0,     2,     3,     3,     5,     6,    13,     0,     3,     3,
+       3,     3,     3,     3,     2,     4,     1,     1,     1,     3,
+       3,     3,     3,     1,     1,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default reduction number in state STATE-NUM.
@@ -563,10 +572,12 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       6,     0,     1,    20,    17,    18,    19,    10,    12,    11,
-       0,     0,     0,     0,     0,     0,     3,     8,     0,     0,
-       0,     0,     2,    20,     0,     0,     0,     0,    13,    14,
-      15,    16,     4,     0,     0,     9,     5,     7
+       7,     0,     1,    26,    23,    24,    25,    16,    18,    17,
+       0,     0,     0,     0,     0,     0,     3,    14,     0,     0,
+       0,     0,     2,    26,     0,     0,     0,     0,    19,    20,
+      21,    22,     4,     0,     0,     0,     0,     0,     0,     0,
+      15,     5,     0,    11,    12,    10,     9,     8,    13,     0,
+       0,     0,     0,     0,     0,     6
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -580,16 +591,18 @@ static const yytype_int8 yydefgoto[] =
 #define YYPACT_NINF -15
 static const yytype_int8 yypact[] =
 {
-     -15,     0,   -15,    -2,   -15,   -15,   -15,   -15,   -15,   -15,
-     -14,    -7,    26,     8,    35,    35,   -15,    22,    35,    35,
-      35,    35,   -15,   -15,    15,     7,    21,    35,   -11,   -11,
-     -15,   -15,   -15,    13,    35,    36,   -15,    36
+     -15,    26,   -15,    -2,   -15,   -15,   -15,   -15,   -15,   -15,
+       0,     7,    44,    33,     5,     5,   -15,    34,     5,     5,
+       5,     5,   -15,   -15,    41,    21,    46,     5,   -10,   -10,
+     -15,   -15,   -15,   -12,     5,     5,     5,     5,     5,     5,
+      62,   -15,     5,    62,    62,    62,    62,    62,    62,     4,
+      30,    31,     5,    29,    40,   -15
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -15,   -15,   -15,   -15,   -15,    -4
+     -15,   -15,   -15,   -15,   -15,   -14
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -598,11 +611,14 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       2,    20,    21,     3,     4,     5,     6,     7,     8,     9,
-      24,    26,    14,    15,    28,    29,    30,    31,    18,    19,
-      20,    21,    16,    35,    10,    18,    19,    20,    21,    17,
-      37,    18,    19,    20,    21,    33,    27,    22,    23,     4,
-       5,     6,    36,    34,    32,     0,    18,    19,    20,    21
+      24,    26,    20,    21,    28,    29,    30,    31,    23,     4,
+       5,     6,    14,    40,    18,    19,    20,    21,    41,    42,
+      43,    44,    45,    46,    47,    48,     2,    15,    49,     3,
+       4,     5,     6,     7,     8,     9,    50,    16,    53,    18,
+      19,    20,    21,    18,    19,    20,    21,    17,    27,    33,
+      10,    18,    19,    20,    21,    51,    18,    19,    20,    21,
+       0,    54,    52,    22,    34,    35,    36,    37,    38,    39,
+      55,    32,    18,    19,    20,    21
 };
 
 #define yypact_value_is_default(Yystate) \
@@ -613,21 +629,26 @@ static const yytype_uint8 yytable[] =
 
 static const yytype_int8 yycheck[] =
 {
-       0,    12,    13,     3,     4,     5,     6,     7,     8,     9,
-      14,    15,    14,    27,    18,    19,    20,    21,    10,    11,
-      12,    13,    29,    27,    24,    10,    11,    12,    13,     3,
-      34,    10,    11,    12,    13,    28,    14,    29,     3,     4,
-       5,     6,    29,    22,    29,    -1,    10,    11,    12,    13
+      14,    15,    12,    13,    18,    19,    20,    21,     3,     4,
+       5,     6,    14,    27,    10,    11,    12,    13,    30,    31,
+      34,    35,    36,    37,    38,    39,     0,    27,    42,     3,
+       4,     5,     6,     7,     8,     9,    32,    30,    52,    10,
+      11,    12,    13,    10,    11,    12,    13,     3,    14,    28,
+      24,    10,    11,    12,    13,    25,    10,    11,    12,    13,
+      -1,    32,    31,    30,    18,    19,    20,    21,    22,    23,
+      30,    30,    10,    11,    12,    13
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    31,     0,     3,     4,     5,     6,     7,     8,     9,
-      24,    33,    34,    35,    14,    27,    29,     3,    10,    11,
-      12,    13,    29,     3,    35,    32,    35,    14,    35,    35,
-      35,    35,    29,    28,    22,    35,    29,    35
+       0,    34,     0,     3,     4,     5,     6,     7,     8,     9,
+      24,    36,    37,    38,    14,    27,    30,     3,    10,    11,
+      12,    13,    30,     3,    38,    35,    38,    14,    38,    38,
+      38,    38,    30,    28,    18,    19,    20,    21,    22,    23,
+      38,    30,    31,    38,    38,    38,    38,    38,    38,    38,
+      32,    25,    31,    38,    32,    30
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1429,7 +1450,7 @@ yyreduce:
     {
         case 4:
 /* Line 1792 of yacc.c  */
-#line 82 "parser.y"
+#line 86 "parser.y"
     {
 										if((yyvsp[(4) - (5)].data).content->type==C){
 										char value=GetValueChar((yyvsp[(4) - (5)].data).content);
@@ -1447,19 +1468,49 @@ yyreduce:
 
   case 5:
 /* Line 1792 of yacc.c  */
-#line 95 "parser.y"
-    {cout<<(yyvsp[(4) - (6)].data).booller<<endl;}
-    break;
-
-  case 7:
-/* Line 1792 of yacc.c  */
 #line 99 "parser.y"
-    {if(CompareData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content))(yyval.data).booller=true;else{(yyval.data).booller=false;}}
+    {cout<<(yyvsp[(4) - (6)].data).booller<<endl;}
     break;
 
   case 8:
 /* Line 1792 of yacc.c  */
-#line 102 "parser.y"
+#line 104 "parser.y"
+    {if(CompareData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content))(yyval.data).booller=true;else{(yyval.data).booller=false;}}
+    break;
+
+  case 9:
+/* Line 1792 of yacc.c  */
+#line 105 "parser.y"
+    {if(CompareData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content)||GreatData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content))(yyval.data).booller=true;else{(yyval.data).booller=false;}}
+    break;
+
+  case 10:
+/* Line 1792 of yacc.c  */
+#line 106 "parser.y"
+    {if(GreatData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content))(yyval.data).booller=true;else{(yyval.data).booller=false;}}
+    break;
+
+  case 11:
+/* Line 1792 of yacc.c  */
+#line 107 "parser.y"
+    {if(LessData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content))(yyval.data).booller=true;else{(yyval.data).booller=false;}}
+    break;
+
+  case 12:
+/* Line 1792 of yacc.c  */
+#line 108 "parser.y"
+    {if(CompareData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content)||LessData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content))(yyval.data).booller=true;else{(yyval.data).booller=false;}}
+    break;
+
+  case 13:
+/* Line 1792 of yacc.c  */
+#line 109 "parser.y"
+    {if(CompareData((yyvsp[(1) - (3)].data).content,(yyvsp[(3) - (3)].data).content)==false)(yyval.data).booller=true;else{(yyval.data).booller=false;}}
+    break;
+
+  case 14:
+/* Line 1792 of yacc.c  */
+#line 113 "parser.y"
     {tmpContent->name=(yyvsp[(2) - (2)].strVal);
 										 SetValue(0,' ');
 										 InserContent(tmpContent);
@@ -1468,9 +1519,9 @@ yyreduce:
 										 }
     break;
 
-  case 9:
+  case 15:
 /* Line 1792 of yacc.c  */
-#line 108 "parser.y"
+#line 119 "parser.y"
     {tmpContent->name=(yyvsp[(2) - (4)].strVal);
 										 if(tmpContent->type==C){
 										 char value=GetValueChar((yyvsp[(4) - (4)].data).content);
@@ -1487,27 +1538,27 @@ yyreduce:
 										 }
     break;
 
-  case 10:
+  case 16:
 /* Line 1792 of yacc.c  */
-#line 124 "parser.y"
+#line 135 "parser.y"
     {tmpContent->type=Z;}
     break;
 
-  case 11:
+  case 17:
 /* Line 1792 of yacc.c  */
-#line 125 "parser.y"
+#line 136 "parser.y"
     {tmpContent->type=C;}
     break;
 
-  case 12:
+  case 18:
 /* Line 1792 of yacc.c  */
-#line 126 "parser.y"
+#line 137 "parser.y"
     {tmpContent->type=F;}
     break;
 
-  case 13:
+  case 19:
 /* Line 1792 of yacc.c  */
-#line 131 "parser.y"
+#line 142 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1521,9 +1572,9 @@ yyreduce:
 										}
     break;
 
-  case 14:
+  case 20:
 /* Line 1792 of yacc.c  */
-#line 142 "parser.y"
+#line 153 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1538,9 +1589,9 @@ yyreduce:
 										}
     break;
 
-  case 15:
+  case 21:
 /* Line 1792 of yacc.c  */
-#line 154 "parser.y"
+#line 165 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1555,9 +1606,9 @@ yyreduce:
 										}
     break;
 
-  case 16:
+  case 22:
 /* Line 1792 of yacc.c  */
-#line 166 "parser.y"
+#line 177 "parser.y"
     {
 										 float tmpValue1=GetValue((yyvsp[(1) - (3)].data).content);
 										 float tmpValue2=GetValue((yyvsp[(3) - (3)].data).content);
@@ -1571,33 +1622,33 @@ yyreduce:
 										}
     break;
 
-  case 17:
+  case 23:
 /* Line 1792 of yacc.c  */
-#line 178 "parser.y"
+#line 189 "parser.y"
     {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].intVal),' ',Z);InsertConstNum((yyval.data).content);}
     break;
 
-  case 18:
+  case 24:
 /* Line 1792 of yacc.c  */
-#line 179 "parser.y"
+#line 190 "parser.y"
     {(yyval.data).content=SetValueWithReturn((yyvsp[(1) - (1)].doubleVal),' ',F);InsertConstNum((yyval.data).content);}
     break;
 
-  case 19:
+  case 25:
 /* Line 1792 of yacc.c  */
-#line 180 "parser.y"
+#line 191 "parser.y"
     {(yyval.data).content=SetValueWithReturn(0,(yyvsp[(1) - (1)].charVal),C);InsertConstNum((yyval.data).content);}
     break;
 
-  case 20:
+  case 26:
 /* Line 1792 of yacc.c  */
-#line 181 "parser.y"
+#line 192 "parser.y"
     {(yyval.data).content=FindContent((yyvsp[(1) - (1)].strVal));if((yyval.data).content==nullptr)yyerror("undeclare symbol");}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1601 "parser.tab.cpp"
+#line 1652 "parser.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1829,6 +1880,6 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 185 "parser.y"
+#line 196 "parser.y"
 
 

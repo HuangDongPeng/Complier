@@ -21,6 +21,9 @@ extern void SetValueAfterDeclare(char* name, double dVar = 0, char cVar = ' ');
 extern Content* SetValueWithReturn(double , char , Property );
 extern void SetValue(double , char );
 extern bool CompareData(Content* a,Content* b);
+extern bool LessData(Content *a, Content * b);
+extern bool GreatData(Content *a, Content * b);
+
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
@@ -63,6 +66,7 @@ using namespace std;
 %token ELSE
 %token WHILE
 %token '(' ')'
+%nonassoc IFNOELSE
 %token NEWLINE
 
 
@@ -92,11 +96,18 @@ sentence:sentence expression NEWLINE
 										 InsertNewQuad(OP_ASSIGN,$4.content->addr,USELESS_ARG,tmpContent->addr);
 										 tmpContent=new Content();
 										}
-		|sentence IF '(' boolexpr ')' NEWLINE	{cout<<$4.booller<<endl;}
+		|sentence IF '(' boolexpr ')' NEWLINE %prec IFNOELSE	{cout<<$4.booller<<endl;}
+		|sentence IF '(' boolexpr ')' '{' expression '}' ELSE '{' expression '}' NEWLINE
 		|
 		;				
 
 boolexpr: expression EQ expression		{if(CompareData($1.content,$3.content))$$.booller=true;else{$$.booller=false;}}
+		| expression GE expression		{if(CompareData($1.content,$3.content)||GreatData($1.content,$3.content))$$.booller=true;else{$$.booller=false;}}
+		| expression GREAT expression		{if(GreatData($1.content,$3.content))$$.booller=true;else{$$.booller=false;}}
+		| expression LESS expression		{if(LessData($1.content,$3.content))$$.booller=true;else{$$.booller=false;}}
+		| expression LE expression		{if(CompareData($1.content,$3.content)||LessData($1.content,$3.content))$$.booller=true;else{$$.booller=false;}}
+		| expression NQ expression		{if(CompareData($1.content,$3.content)==false)$$.booller=true;else{$$.booller=false;}}
+
 		;
 
 declare: dataType ID					{tmpContent->name=$2;

@@ -70,7 +70,8 @@ extern int yydebug;
      IF = 279,
      ELSE = 280,
      WHILE = 281,
-     NEWLINE = 282
+     IFNOELSE = 282,
+     NEWLINE = 283
    };
 #endif
 
@@ -79,7 +80,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 39 "parser.y"
+#line 42 "parser.y"
 
 	int intVal;
 	double doubleVal;
@@ -97,7 +98,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 101 "parser.tab.h"
+#line 102 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
