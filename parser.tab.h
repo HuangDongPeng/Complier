@@ -79,7 +79,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 38 "parser.y"
+#line 39 "parser.y"
 
 	int intVal;
 	double doubleVal;
@@ -92,11 +92,12 @@ typedef union YYSTYPE
 	double dVal;
 	int iVal;
 	char cVal;
+	bool booller;
 	}data;
 
 
 /* Line 2058 of yacc.c  */
-#line 100 "parser.tab.h"
+#line 101 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

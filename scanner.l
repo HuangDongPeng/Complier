@@ -34,6 +34,12 @@ comment_inline		"//".*\n
 {comment_interline}			{}
 {comment_inline}			{}
 
+"if"		{return (IF);}
+"else"		{return (ELSE);}
+"while"		{return (WHILE);}
+
+
+
 
 
 "int"		{return (INT);}
@@ -65,12 +71,6 @@ comment_inline		"//".*\n
 ">="	{return	(GE);}
 "=="	{return	(EQ);}
 "!="	{return	(NQ);}
-
-"if"		{return (IF);}
-"else"		{return (ELSE);}
-"while"		{return (WHILE);}
-
-
 
 
 %%

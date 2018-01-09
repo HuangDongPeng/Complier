@@ -20,6 +20,7 @@ extern char GetValueChar(Content *content);
 extern void SetValueAfterDeclare(char* name, double dVar = 0, char cVar = ' ');
 extern Content* SetValueWithReturn(double , char , Property );
 extern void SetValue(double , char );
+extern bool CompareData(Content* a,Content* b);
 
 float GetValue(Content *content);
 char GetValueChar(Content *content);
@@ -47,6 +48,7 @@ using namespace std;
 	double dVal;
 	int iVal;
 	char cVal;
+	bool booller;
 	}data;
 }
 
@@ -70,6 +72,7 @@ using namespace std;
 
 
 %type <data>expression
+%type <data>boolexpr
 
 %%
 
@@ -89,9 +92,12 @@ sentence:sentence expression NEWLINE
 										 InsertNewQuad(OP_ASSIGN,$4.content->addr,USELESS_ARG,tmpContent->addr);
 										 tmpContent=new Content();
 										}
+		|sentence IF '(' boolexpr ')' NEWLINE	{cout<<$4.booller<<endl;}
 		|
 		;				
 
+boolexpr: expression EQ expression		{if(CompareData($1.content,$3.content))$$.booller=true;else{$$.booller=false;}}
+		;
 
 declare: dataType ID					{tmpContent->name=$2;
 										 SetValue(0,' ');

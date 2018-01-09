@@ -424,6 +424,33 @@ void SetValueAfterDeclare(char* name, double dVar = 0, char cVar = ' ') {
 	SetValue(dVar, cVar);
 }
 
+bool CompareData(Content* a,Content* b) {
+	if (a->type == b->type) {
+		switch (a->type)
+		{
+		case Z:
+			if (a->data.intVal == b->data.intVal)
+				return true;
+			break;
+		case C:
+			if (a->data.charVal == b->data.charVal)
+				return true;
+			break;
+		case F:
+			if (a->data.floatVal == b->data.floatVal)
+				return true;
+			break;	
+		default:
+			break;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return false;
+}
+
 
 Content::Content()
 {
